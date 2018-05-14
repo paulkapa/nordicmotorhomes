@@ -17,12 +17,12 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
-    public ArrayList<Object> readAll() {
+    public ArrayList<Object> readAll(String tableName) {
 
         ArrayList<Object> objects = new ArrayList<>();
 
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM table_name");
+            preparedStatement = conn.prepareStatement("SELECT * FROM '"+ tableName +"'");
             result = preparedStatement.executeQuery();
 
             while (result.next()){
@@ -35,10 +35,10 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
-    public Object read(int id) {
+    public Object read(String tableName, String columnName, String value) {
 
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM table_name WHERE column_name = value");
+            preparedStatement = conn.prepareStatement("SELECT * FROM '"+ tableName +"' WHERE '"+ columnName +"' = '"+ value +"'");
             result = preparedStatement.executeQuery();
 
             if (result.next()){
@@ -51,11 +51,11 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
-    public void create(Object object) {
+    public void create(String tableName, Object object) {
 
         try {
 
-            preparedStatement = conn.prepareStatement("INSERT INTO table_name(column_name_1, column_name_2, column_name_3, column_name_4) VALUES (?, ?, ?, ?)");
+            preparedStatement = conn.prepareStatement("INSERT INTO '"+ tableName +"'(column_name_1, column_name_2, column_name_3, column_name_4) VALUES (?, ?, ?, ?)");
 
             preparedStatement.setString(1, "");
             preparedStatement.setString(2, "");
@@ -68,10 +68,10 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
-    public void update(Object object) {
+    public void update(String tableName, Object object) {
 
         try {
-            preparedStatement = conn.prepareStatement("UPDATE table_name SET column_name_1 = ?, column_name_2 = ?, column_name_3 = ?, column_name_4 = ? WHERE column_name = ?");
+            preparedStatement = conn.prepareStatement("UPDATE '"+ tableName +"' SET column_name_1 = ?, column_name_2 = ?, column_name_3 = ?, column_name_4 = ? WHERE column_name = ?");
 
             preparedStatement.setString(1, "");
             preparedStatement.setString(2, "");
@@ -86,12 +86,12 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String tableName, String columnName, String value) {
 
         try {
-            preparedStatement = conn.prepareStatement("DELETE FROM table_name WHERE column_name = ?");
+            preparedStatement = conn.prepareStatement("DELETE FROM '"+ tableName +"' WHERE '"+ columnName +"' = '"+ value +"'");
 
-            preparedStatement.setString(1, "");
+            //preparedStatement.setString(1, "");
 
             preparedStatement.execute();
         } catch (SQLException e) {
