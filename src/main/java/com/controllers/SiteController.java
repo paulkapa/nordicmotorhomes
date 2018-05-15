@@ -22,29 +22,28 @@ public class SiteController {
 
     @GetMapping("/")
     public String index() {
-
         staff = staffRepository.readAll("staff");
-        //System.out.println(ur.readAll());
+        System.out.println(staff);
         return "index";
     }
 
     @PostMapping("/")
     public String checkLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
 
-        boolean bool = false; //iGameRepository.readOne(nickname, password);
+        boolean bool = staffRepository.readOne(username, password);
 
         if(bool) {
-            return "game";
+            return "index";
         } else {
             return "redirect:/";
         }
     }
-
-    @GetMapping("/create")
+/*
+    @GetMapping("/game")
     public String create(){
 
         //UserRepository ur = new UserRepository();
         //ur.create(new Person());
         return "index";
-    }
+    }*/
 }
