@@ -1,6 +1,8 @@
 package com.controllers;
 
 
+import com.database.StaffRepository;
+import com.models.Staff;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +13,17 @@ import java.util.ArrayList;
 @Controller
 public class SiteController {
 
+    private ArrayList<Staff> staff;
+    private StaffRepository staffRepository;
+
+    public SiteController() {
+        this.staffRepository = new StaffRepository();
+    }
+
     @GetMapping("/")
     public String index() {
 
-        //UserRepository ur = new UserRepository();
+        staff = staffRepository.readAll("staff");
         //System.out.println(ur.readAll());
         return "index";
     }
