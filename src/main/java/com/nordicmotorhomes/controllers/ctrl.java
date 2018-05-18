@@ -2,7 +2,7 @@ package com.nordicmotorhomes.controllers;
 
 import com.nordicmotorhomes.database.IObjectRepository;
 import com.nordicmotorhomes.database.StaffRepository;
-import com.nordicmotorhomes.models.Staff;
+import com.nordicmotorhomes.model.Staff;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ public class ctrl {
 
     @GetMapping("/")
     public String getIndex(Model model) {
-        model.addAttribute("staff", iObjectRepository.readAll("staff"));
+        model.addAttribute("stf", iObjectRepository.readAll("staff"));
         return "index";
     }
 

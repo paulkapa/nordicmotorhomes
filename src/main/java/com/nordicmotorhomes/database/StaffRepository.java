@@ -1,6 +1,6 @@
 package com.nordicmotorhomes.database;
 
-import com.nordicmotorhomes.models.Staff;
+import com.nordicmotorhomes.model.Staff;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ public class StaffRepository implements IObjectRepository<Staff> {
             result = preparedStatement.executeQuery();
 
             while (result.next()){
-                staff.add(new Staff(result.getString("fullName"), result.getString("function"), result.getString("username"), result.getString("password")));
+                staff.add(new Staff(result.getInt("pKey_staffId"), result.getString("fullName"), result.getString("function"), result.getString("username"), result.getString("password")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

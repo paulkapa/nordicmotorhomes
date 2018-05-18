@@ -1,7 +1,8 @@
-package com.nordicmotorhomes.models;
+package com.nordicmotorhomes.model;
 
 public class Staff {
 
+    private int id;
     private String fullName;
     private String function;
     private String username;
@@ -11,11 +12,20 @@ public class Staff {
 
     }
 
-    public Staff(String fullName, String function, String username, String password) {
+    public Staff(int id, String fullName, String function, String username, String password) {
+        this.id = id;
         this.fullName = fullName;
         this.function = function;
         this.username = username;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -50,10 +60,10 @@ public class Staff {
         this.password = password;
     }
 
-    @Override
     public String toString() {
         return "Staff{" +
-                "fullName='" + fullName + '\'' +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
                 ", function='" + function + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

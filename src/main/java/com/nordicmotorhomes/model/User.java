@@ -1,4 +1,4 @@
-package com.nordicmotorhomes.models;
+package com.nordicmotorhomes.model;
 
 public class User {
 
