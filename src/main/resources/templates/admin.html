@@ -11,7 +11,7 @@
         <a href="/" class="btn">LOG-OUT</a>
     </span>
 
-    <div class="container">
+    <div class="container staff">
 
     <table>
         <thead>
@@ -39,6 +39,40 @@
         </tr>
         </tbody>
     </table>
+
+    </div>
+
+    <br>
+    <br>
+
+    <div class="container types">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Function</th>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="staff : ${stf}">
+                <td th:text="${staff.id}"></td>
+                <td th:text="${staff.fullName}"></td>
+                <td th:text="${staff.function}"></td>
+                <td th:text="${staff.username}"></td>
+                <td th:text="${staff.password}"></td>
+                <!--td>
+                    <a th:href="@{'/details?id=' + ${student.id}}" class="btn btn-details">Details</a>
+                    <a th:href="@{'/update?id=' + ${student.id}}" class="btn btn-ed">Update</a>
+                    <a th:href="@{'/delete?id=' + ${student.id}}" class="btn btn-del">Delete</a>
+                </td-->
+            </tr>
+            </tbody>
+        </table>
 
     </div>
 </body>
