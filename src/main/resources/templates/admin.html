@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!--meta charset="UTF-8"-->
+    <title>Admin</title>
+</head>
+<body>
+    <span><a href="/">LOG-OUT</a></span>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Function</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="staff : ${staff}">
+            <td th:text="${staff.fullName}"></td>
+            <td th:text="${staff.function}"></td>
+            <td th:text="${staff.username}"></td>
+            <td th:text="${staff.password}"></td>
+            <td></td>
+            <!--td><a th:href="@{'/details?id=' + ${student.id}}" class="btn btn-details">Details</a> <a th:href="@{'/update?id=' + ${student.id}}" class="btn btn-ed">Update</a> <a th:href="@{'/delete?id=' + ${student.id}}" class="btn btn-del">Delete</a>   </td-->
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

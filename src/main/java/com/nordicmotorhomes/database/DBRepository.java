@@ -1,4 +1,4 @@
-package com.database;
+package com.nordicmotorhomes.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +48,11 @@ public class DBRepository implements IObjectRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean readOne(String a, String b) {
+        return false;
     }
 
     @Override

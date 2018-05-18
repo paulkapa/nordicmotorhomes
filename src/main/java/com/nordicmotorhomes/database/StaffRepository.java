@@ -1,6 +1,6 @@
-package com.database;
+package com.nordicmotorhomes.database;
 
-import com.models.Staff;
+import com.nordicmotorhomes.models.Staff;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +23,7 @@ public class StaffRepository implements IObjectRepository<Staff> {
         ArrayList<Staff> staff = new ArrayList<>();
 
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM '"+ tableName +"'");
+            preparedStatement = conn.prepareStatement("SELECT * FROM staff");
             result = preparedStatement.executeQuery();
 
             while (result.next()){
@@ -40,18 +40,27 @@ public class StaffRepository implements IObjectRepository<Staff> {
         return null;
     }
 
+    @Override
     public boolean readOne(String username, String password) {
+
+        boolean bool = false;
+
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM staff WHERE username = '"+ username +"' AND password = '"+ password +"'");
+
+            preparedStatement = conn.prepareStatement("select * from staff");
             result = preparedStatement.executeQuery();
 
-            if (result.next()){
-                return true;
+            while (result.next() && !bool) {
+
+                if(result.getString("username").equals(username) && result.getString("password").equals(password)) {
+                    bool = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+
+        return bool;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.database;
+package com.nordicmotorhomes.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +13,7 @@ class DBConnection {
 
     static Connection getConnection() {
         try {
+            System.out.println("\nConnected!\n\n");
             return DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
