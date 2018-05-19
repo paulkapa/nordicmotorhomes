@@ -51,7 +51,7 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
-    public boolean readOne(String a, String b) {
+    public boolean readOne(String tableName, String value1, String value2) {
         return false;
     }
 

@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <!--meta charset="UTF-8"-->
     <link rel="stylesheet" href="style.css" />
     <title>Admin</title>
 </head>
+
 <body>
 
     <span class="container">
-        <a href="/" class="btn">LOG-OUT</a>
+        <p> <a href="/" class="btn">LOG-OUT</a> </p>
     </span>
 
-    <div class="container staff">
+<div class="container">
 
+    <h1>Staff</h1>
     <table>
         <thead>
         <tr>
@@ -31,49 +34,47 @@
             <td th:text="${staff.function}"></td>
             <td th:text="${staff.username}"></td>
             <td th:text="${staff.password}"></td>
-            <!--td>
-                <a th:href="@{'/details?id=' + ${student.id}}" class="btn btn-details">Details</a>
-                <a th:href="@{'/update?id=' + ${student.id}}" class="btn btn-ed">Update</a>
-                <a th:href="@{'/delete?id=' + ${student.id}}" class="btn btn-del">Delete</a>
-            </td-->
         </tr>
         </tbody>
     </table>
 
-    </div>
+</div>
 
-    <br>
-    <br>
+<br>
+<br>
 
-    <div class="container types">
+<div class="container">
 
-        <table>
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Function</th>
-                <th>Username</th>
-                <th>Password</th>
-            </tr>
-            </thead>
+    <h1>Customers</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Cpr</th>
+        </tr>
+        </thead>
 
-            <tbody>
-            <tr th:each="staff : ${stf}">
-                <td th:text="${staff.id}"></td>
-                <td th:text="${staff.fullName}"></td>
-                <td th:text="${staff.function}"></td>
-                <td th:text="${staff.username}"></td>
-                <td th:text="${staff.password}"></td>
-                <!--td>
-                    <a th:href="@{'/details?id=' + ${student.id}}" class="btn btn-details">Details</a>
-                    <a th:href="@{'/update?id=' + ${student.id}}" class="btn btn-ed">Update</a>
-                    <a th:href="@{'/delete?id=' + ${student.id}}" class="btn btn-del">Delete</a>
-                </td-->
-            </tr>
-            </tbody>
-        </table>
+        <tbody>
+        <tr th:each="user : ${usr}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.fullName}"></td>
+            <td th:text="${user.cprNr}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-    </div>
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Bookings </h1>
+
+</div>
+
 </body>
+
 </html>

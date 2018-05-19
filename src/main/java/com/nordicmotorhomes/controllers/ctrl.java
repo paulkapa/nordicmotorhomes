@@ -2,10 +2,9 @@ package com.nordicmotorhomes.controllers;
 
 import com.nordicmotorhomes.database.IObjectRepository;
 import com.nordicmotorhomes.database.StaffRepository;
-import com.nordicmotorhomes.model.Staff;
+import com.nordicmotorhomes.database.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import java.util.ArrayList;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ctrl {
 
-    private ArrayList<Staff> staff = new ArrayList<>();
-    private IObjectRepository iObjectRepository;
+    private IObjectRepository staffRepository;
+    private IObjectRepository userRepository;
 
     public ctrl() {
-        this.iObjectRepository = new StaffRepository();
-        this.staff = iObjectRepository.readAll("staff");
+        this.staffRepository = new StaffRepository();
+        this.userRepository = new UserRepository();
     }
 
     @GetMapping("/")
@@ -29,9 +28,9 @@ public class ctrl {
     }
 
     @PostMapping("/")
-    public String checkLogin(@RequestParam("username") String username, @RequestParam("password") String password, ArrayList<Staff> staff) {
+    public String checkLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
 
-        boolean bool = iObjectRepository.readOne(username, password);
+        boolean bool = staffRepository.readOne("staff", username, password);
 
         if(bool) {
             return "redirect:/" + username;
@@ -42,17 +41,11 @@ public class ctrl {
 
     @GetMapping("/admin")
     public String getAdminPage(Model model) {
-        model.addAttribute("stf", staff);
 
-        System.out.println(model);
-        System.out.println(staff);
+        model.addAttribute("stf", staffRepository.readAll("staff"));
+        model.addAttribute("usr", userRepository.readAll("users"));
 
         return "admin";
-    }
-
-    @PostMapping("/admin")
-    public String refreshAdmin() {
-        return "redirect:/";
     }
 
     @GetMapping("/sales")

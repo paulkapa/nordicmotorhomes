@@ -2,6 +2,7 @@ package com.nordicmotorhomes.model;
 
 public class User {
 
+    private int id;
     private String fullName;
     private String cprNr;
 
@@ -9,9 +10,18 @@ public class User {
 
     }
 
-    public User(String fullName, String cprNr) {
+    public User(int id, String fullName, String cprNr) {
+        this.id = id;
         this.fullName = fullName;
         this.cprNr = cprNr;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -30,10 +40,10 @@ public class User {
         this.cprNr = cprNr;
     }
 
-    @Override
     public String toString() {
         return "User{" +
-                "fullName='" + fullName + '\'' +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
                 ", cprNr='" + cprNr + '\'' +
                 '}';
     }

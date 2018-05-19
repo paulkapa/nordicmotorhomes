@@ -1,6 +1,6 @@
 package com.nordicmotorhomes.database;
 
-import com.nordicmotorhomes.model.Staff;
+import com.nordicmotorhomes.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,36 +8,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class StaffRepository implements IObjectRepository<Staff> {
+public class UserRepository implements IObjectRepository<User> {
 
     private Connection conn;
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
-    public StaffRepository(){
+    public UserRepository(){
         this.conn = DBConnection.getConnection();
     }
 
     @Override
-    public ArrayList<Staff> readAll(String tableName) {
-        ArrayList<Staff> staff = new ArrayList<>();
+    public ArrayList<User> readAll(String tableName) {
+        ArrayList<User> users = new ArrayList<>();
 
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM staff");
+            preparedStatement = conn.prepareStatement("SELECT * FROM users");
             result = preparedStatement.executeQuery();
 
             while (result.next()){
-                staff.add(new Staff(result.getInt("pKey_staffId"), result.getString("fullName"), result.getString("function"), result.getString("username"), result.getString("password")));
+                users.add(new User(result.getInt("pKey_userId"), result.getString("fullName"), result.getString("cprNr")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return staff;
-    }
-
-    @Override
-    public Staff read(String tableName, String columnName, String value) {
-        return null;
+        return users;
     }
 
     @Override
@@ -47,7 +42,7 @@ public class StaffRepository implements IObjectRepository<Staff> {
 
         try {
 
-            preparedStatement = conn.prepareStatement("select * from staff");
+            preparedStatement = conn.prepareStatement("select * from users");
             result = preparedStatement.executeQuery();
 
             while (result.next() && !bool) {
@@ -64,12 +59,17 @@ public class StaffRepository implements IObjectRepository<Staff> {
     }
 
     @Override
-    public void create(String tableName, Staff object) {
+    public User read(String tableName, String columnName, String value) {
+        return null;
+    }
+
+    @Override
+    public void create(String tableName, User object) {
 
     }
 
     @Override
-    public void update(String tableName, Staff object) {
+    public void update(String tableName, User object) {
 
     }
 
@@ -77,4 +77,5 @@ public class StaffRepository implements IObjectRepository<Staff> {
     public void delete(String tableName, String columnName, String value) {
 
     }
+
 }
