@@ -71,7 +71,78 @@
 
 <div class="container">
 
+    <h1>Motorhomes</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Motorhome Id</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Is Available</th>
+            <th>Max Capacity (persons)</th>
+            <th>Fuel Tank Volume (L/kg)</th>
+            <th>Price Per Day</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="motorhome : ${mtrhm}">
+            <td th:text="${motorhome.id}"></td>
+            <td th:text="${motorhome.type}"></td>
+            <td th:text="${motorhome.brand}"></td>
+            <td th:text="${motorhome.model}"></td>
+            <td th:text="${motorhome.isAvailable}"></td>
+            <td th:text="${motorhome.maxCapacity}"></td>
+            <td th:text="${motorhome.fuelTankVolume}"></td>
+            <td th:text="${motorhome.ppd}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
     <h1>Bookings </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Booking Id</th>
+            <th>Motorhome Id</th>
+            <th>User Id</th>
+            <th>Start Date</th>
+            <th>Is Cancelled</th>
+            <th>Cancellation Date</th>
+            <th>Price Per Day</th>
+            <th>Extras</th>
+            <th>Pick-up Distance</th>
+            <th>Drop-off Distance</th>
+            <th>Km at Drop-Off</th>
+            <th>End Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="booking : ${bkn}">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.mtrhmId}"></td>
+            <td th:text="${booking.userId}"></td>
+            <td th:text="${booking.startDate}"></td>
+            <td th:text="${booking.isCancelled}"></td>
+            <td th:text="${booking.cancellationDate}"></td>
+            <td th:text="${booking.ppd}"></td>
+            <td th:text="${booking.extrasPrice}"></td>
+            <td th:text="${booking.pickUpDistance}"></td>
+            <td th:text="${booking.dropOffDistance}"></td>
+            <td th:text="${booking.dropOffKmNr}"></td>
+            <td th:text="${booking.endDate}"></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
