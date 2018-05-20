@@ -10,12 +10,11 @@ import java.util.ArrayList;
 
 public class StaffRepository implements IObjectRepository<Staff> {
 
-    private Connection conn;
+    private static Connection conn = DBConnection.getConnection();
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
     public StaffRepository(){
-        this.conn = DBConnection.getConnection();
     }
 
     @Override

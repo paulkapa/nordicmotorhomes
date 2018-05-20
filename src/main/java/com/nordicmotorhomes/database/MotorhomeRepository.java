@@ -13,18 +13,14 @@ import java.util.ArrayList;
 
 public class MotorhomeRepository implements IObjectRepository<Motorhome> {
 
-    private Connection conn;
+    private static Connection conn = DBConnection.getConnection();;
     private PreparedStatement preparedStatement;
     private ResultSet result;
-    private IObjectRepository typeRepository;
-    private IObjectRepository brandRepository;
-    private IObjectRepository modelRepository;
+    private static IObjectRepository typeRepository = new TypeRepository();
+    private static IObjectRepository brandRepository = new BrandRepository();
+    private static IObjectRepository modelRepository = new ModelRepository();
 
     public MotorhomeRepository() {
-        this.conn = DBConnection.getConnection();
-        this.typeRepository = new TypeRepository();
-        this.brandRepository = new BrandRepository();
-        this.modelRepository = new ModelRepository();
     }
 
     @Override

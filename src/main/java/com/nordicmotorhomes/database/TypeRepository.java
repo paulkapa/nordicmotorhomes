@@ -10,12 +10,11 @@ import java.util.ArrayList;
 
 public class TypeRepository implements IObjectRepository<Type> {
 
-    private Connection conn;
+    private static Connection conn = DBConnection.getConnection();;
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
     public TypeRepository(){
-        this.conn = DBConnection.getConnection();
     }
 
     @Override

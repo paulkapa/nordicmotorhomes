@@ -10,12 +10,11 @@ import java.util.ArrayList;
 
 public class ModelRepository implements IObjectRepository<Modela> {
 
-    private Connection conn;
+    private static Connection conn = DBConnection.getConnection();
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
     public ModelRepository(){
-        this.conn = DBConnection.getConnection();
     }
 
     @Override

@@ -10,12 +10,11 @@ import java.util.ArrayList;
 
 public class BookingRepository implements IObjectRepository<Booking> {
 
-    private Connection conn;
+    private static Connection conn = DBConnection.getConnection();
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
     public BookingRepository(){
-        this.conn = DBConnection.getConnection();
     }
 
     @Override

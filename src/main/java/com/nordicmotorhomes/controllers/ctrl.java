@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ctrl {
 
-    private IObjectRepository staffRepository;
-    private IObjectRepository userRepository;
-    private IObjectRepository bookingRepository;
-    private IObjectRepository motorhomeRepository;
+    private static IObjectRepository staffRepository = new StaffRepository();
+    private static IObjectRepository userRepository = new UserRepository();
+    private static IObjectRepository bookingRepository = new BookingRepository();
+    private static IObjectRepository motorhomeRepository = new MotorhomeRepository();
 
     public ctrl() {
-        this.staffRepository = new StaffRepository();
-        this.userRepository = new UserRepository();
-        this.bookingRepository = new BookingRepository();
-        this.motorhomeRepository = new MotorhomeRepository();
     }
 
     @GetMapping("/")
