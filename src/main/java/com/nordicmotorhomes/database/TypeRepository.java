@@ -19,7 +19,19 @@ public class TypeRepository implements IObjectRepository<Type> {
 
     @Override
     public ArrayList<Type> readAll(String tableName) {
-        return null;
+        ArrayList<Type> typeList = new ArrayList<>();
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM types");
+            result = preparedStatement.executeQuery();
+
+            while (result.next()){
+                typeList.add(new Type(result.getInt("pKey_typeId"), result.getString("type")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return typeList;
     }
 
     @Override

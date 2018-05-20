@@ -9,7 +9,7 @@
 
 <body>
 
-    <span class="container">
+<span class="container">
         <p> <a href="/" class="btn">LOG-OUT</a> </p>
     </span>
 
@@ -71,42 +71,6 @@
 
 <div class="container">
 
-    <h1>Motorhomes</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Motorhome Id</th>
-            <th>Type</th>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Is Available</th>
-            <th>Max Capacity (persons)</th>
-            <th>Fuel Tank Volume (L/kg)</th>
-            <th>Price Per Day</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="motorhome : ${mtrhm}">
-            <td th:text="${motorhome.id}"></td>
-            <td th:text="${motorhome.type}"></td>
-            <td th:text="${motorhome.brand}"></td>
-            <td th:text="${motorhome.model}"></td>
-            <td th:text="${motorhome.isAvailable}"></td>
-            <td th:text="${motorhome.maxCapacity}"></td>
-            <td th:text="${motorhome.fuelTankVolume}"></td>
-            <td th:text="${motorhome.ppd}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-</div>
-
-<br>
-<br>
-
-<div class="container">
-
     <h1>Bookings </h1>
     <table>
         <thead>
@@ -145,6 +109,171 @@
     </table>
 
 </div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Motorhomes</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Motorhome Id</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Is Available</th>
+            <th>Max Capacity (persons)</th>
+            <th>Fuel Tank Volume (L/kg)</th>
+            <th>Price Per Day</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="motorhome : ${mtrhm}">
+            <td th:text="${motorhome.id}"></td>
+            <td th:text="${motorhome.type}"></td>
+            <td th:text="${motorhome.brand}"></td>
+            <td th:text="${motorhome.model}"></td>
+            <td th:text="${motorhome.isAvailable}"></td>
+            <td th:text="${motorhome.maxCapacity}"></td>
+            <td th:text="${motorhome.fuelTankVolume}"></td>
+            <td th:text="${motorhome.ppd}"></td>
+            <td>
+                <a th:href="@{'/update?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/add" class="btn btn-add ">Add new motorhome</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Brands </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Brand Id</th>
+            <th>Brand</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="brand : ${brnd}">
+            <td th:text="${brand.id}"></td>
+            <td th:text="${brand.brand}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Models </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Model Id</th>
+            <th>Model</th>
+            <th>Max Capacity</th>
+            <th>Fuel tank volume</th>
+            <th>Price per day</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="model : ${mdl}">
+            <td th:text="${model.id}"></td>
+            <td th:text="${model.model}"></td>
+            <td th:text="${model.maxCapacity}"></td>
+            <td th:text="${model.fuelTankVolume}"></td>
+            <td th:text="${model.ppd}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Types </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Type Id</th>
+            <th>Type</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="type : ${type}">
+            <td th:text="${type.id}"></td>
+            <td th:text="${type.type}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Repairs </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Repair Id</th>
+            <th>Motorhome Id</th>
+            <th>Start date</th>
+            <th>Problem</th>
+            <th>Solution</th>
+            <th>End Date</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="repair : ${repair}">
+            <td th:text="${repair.repairId}"></td>
+            <td th:text="${repair.motorhomeId}"></td>
+            <td th:text="${repair.startDate}"></td>
+            <td th:text="${repair.problem}"></td>
+            <td th:text="${repair.solution}"></td>
+            <td th:text="${repair.endDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<p class = "footer">
+    Made by Cristina, Sebi, Dragos and Paul - KEA 2018
+</p>
 
 </body>
 

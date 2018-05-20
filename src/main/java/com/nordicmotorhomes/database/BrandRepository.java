@@ -19,7 +19,19 @@ public class BrandRepository implements IObjectRepository<Brand> {
 
     @Override
     public ArrayList<Brand> readAll(String tableName) {
-        return null;
+        ArrayList<Brand> brandList = new ArrayList<>();
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM brands");
+            result = preparedStatement.executeQuery();
+
+            while (result.next()){
+                brandList.add(new Brand(result.getInt("pKey_brandId"), result.getString("brand")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return brandList;
     }
 
     @Override

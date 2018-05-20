@@ -16,6 +16,7 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
     private static Connection conn = DBConnection.getConnection();;
     private PreparedStatement preparedStatement;
     private ResultSet result;
+
     private static IObjectRepository typeRepository = new TypeRepository();
     private static IObjectRepository brandRepository = new BrandRepository();
     private static IObjectRepository modelRepository = new ModelRepository();
@@ -32,6 +33,7 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
             result = preparedStatement.executeQuery();
 
             while (result.next()){
+
                 Motorhome motorhome = new Motorhome();
                 motorhome.setId(result.getInt("pKey_mtrhmId"));
                 Type type = (Type) typeRepository.read("types", "id", String.valueOf(result.getInt("fKey_typeId")));
@@ -40,12 +42,12 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
                 motorhome.setBrand(brand.getBrand());
                 Modela model = (Modela) modelRepository.read("models", "id", String.valueOf(result.getInt("fKey_modelId")));
                 motorhome.setModel(model.getModel());
-                motorhome.setIsAvailable(1);
+                motorhome.setIsAvailable(checkBooking(motorhome.getId()));
                 motorhome.setMaxCapacity(model.getMaxCapacity());
                 motorhome.setFuelTankVolume(model.getFuelTankVolume());
                 motorhome.setPpd(model.getPpd());
-
                 motorhomes.add(motorhome);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,6 +64,12 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
     public boolean readOne(String tableName, String value1, String value2) {
         return false;
     }
+    /*
+    public Motorhome readOne(int id) {
+
+
+    }
+    */
 
     @Override
     public void create(String tableName, Motorhome object) {
@@ -73,8 +81,51 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
 
     }
 
+    /*
+    public void update(Motorhome motorhome) {
+
+        try {
+            preparedStatement = conn.prepareStatement("UPDATE mtrhms SET fKey = ?, last_name = ?, enrollment_date = ?, cpr = ? WHERE id = ?");
+            preparedStatement.setString(1, student.getName());
+            preparedStatement.setString(2, student.getLastName());
+            preparedStatement.setDate(3, Date.valueOf(student.getEnrollmentDate()));
+            preparedStatement.setString(4, student.getCpr());
+            preparedStatement.setInt(5, student.getId());
+
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    */
     @Override
     public void delete(String tableName, String columnName, String value) {
 
+    }
+
+    public int checkBooking(int motorhomeId) {
+
+        int isAvailable = 1;
+
+        PreparedStatement preparedStatement;
+        ResultSet result;
+
+        try{
+
+            preparedStatement = conn.prepareStatement("select * from mtrhms_bookings");
+            result = preparedStatement.executeQuery();
+
+            while(result.next() && isAvailable == 1){
+                if(result.getInt("fKey_mtrhmsId") == motorhomeId) {
+                    isAvailable = 0;
+                }
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return isAvailable;
     }
 }

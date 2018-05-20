@@ -19,7 +19,21 @@ public class ModelRepository implements IObjectRepository<Modela> {
 
     @Override
     public ArrayList<Modela> readAll(String tableName) {
-        return null;
+        ArrayList<Modela> modelList = new ArrayList<>();
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM models");
+            result = preparedStatement.executeQuery();
+
+            while (result.next()){
+                modelList.add(new Modela(result.getInt("pKey_modelId"), result.getString("model"),
+                        result.getInt("max_capacity"), result.getInt("fuelTank_volume"),
+                        result.getInt("ppd")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return modelList;
     }
 
     @Override
