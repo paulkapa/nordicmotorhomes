@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <!--meta charset="UTF-8"-->
     <link rel="stylesheet" href="style.css" />
@@ -9,6 +9,143 @@
 
     <span class="container">
         <a href="/" class="btn">LOG-OUT</a>
-    </span></body>
+    </span>
+
+<div class="container">
+
+    <h1>Bookings </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Booking Id</th>
+            <th>Motorhome Id</th>
+            <th>User Id</th>
+            <th>Start Date</th>
+            <th>Is Cancelled</th>
+            <th>Cancellation Date</th>
+            <th>Price Per Day</th>
+            <th>Extras</th>
+            <th>Pick-up Distance</th>
+            <th>Drop-off Distance</th>
+            <th>Km at Drop-Off</th>
+            <th>End Date</th>
+            <th>Reserved/Rented</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="booking : ${bkn}">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.mtrhmId}"></td>
+            <td th:text="${booking.userId}"></td>
+            <td th:text="${booking.startDate}"></td>
+            <td th:text="${booking.isCancelled}"></td>
+            <td th:text="${booking.cancellationDate}"></td>
+            <td th:text="${booking.ppd}"></td>
+            <td th:text="${booking.extrasPrice}"></td>
+            <td th:text="${booking.pickUpDistance}"></td>
+            <td th:text="${booking.dropOffDistance}"></td>
+            <td th:text="${booking.dropOffKmNr}"></td>
+            <td th:text="${booking.endDate}"></td>
+            <td th:text="${booking.reservationRental}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Motorhomes</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Motorhome Id</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Is Available</th>
+            <th>Max Capacity (persons)</th>
+            <th>Fuel Tank Volume (L/kg)</th>
+            <th>Price Per Day</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="motorhome : ${mtrhm}">
+            <td th:text="${motorhome.id}"></td>
+            <td th:text="${motorhome.type}"></td>
+            <td th:text="${motorhome.brand}"></td>
+            <td th:text="${motorhome.model}"></td>
+            <td th:text="${motorhome.isAvailable}"></td>
+            <td th:text="${motorhome.maxCapacity}"></td>
+            <td th:text="${motorhome.fuelTankVolume}"></td>
+            <td th:text="${motorhome.ppd}"></td>
+            <td>
+                <a th:href="@{'/updateMotorhomes?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/addMotorhomes" class="btn btn-add ">Add new motorhome</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Repairs </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Repair Id</th>
+            <th>Motorhome Id</th>
+            <th>Start date</th>
+            <th>Problem</th>
+            <th>Solution</th>
+            <th>End Date</th>
+            <th></th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="repair : ${repair}">
+            <td th:text="${repair.repairId}"></td>
+            <td th:text="${repair.motorhomeId}"></td>
+            <td th:text="${repair.startDate}"></td>
+            <td th:text="${repair.problem}"></td>
+            <td th:text="${repair.solution}"></td>
+            <td th:text="${repair.endDate}"></td>
+            <td>
+                <a th:href="@{'/updateRepairs?id=' + ${repair.repairId}}" class="btn btn-update">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/addRepairs" class="btn btn-add ">Add new repair</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<p class = "footer">
+    Made by Cristina, Sebi, Dragos and Paul - KEA 2018
+</p>
+
+</body>
 
 </html>

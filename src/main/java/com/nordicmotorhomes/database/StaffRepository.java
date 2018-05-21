@@ -63,6 +63,11 @@ public class StaffRepository implements IObjectRepository<Staff> {
     }
 
     @Override
+    public Staff readId(int id) {
+        return null;
+    }
+
+    @Override
     public void create(String tableName, Staff object) {
 
     }
@@ -76,4 +81,17 @@ public class StaffRepository implements IObjectRepository<Staff> {
     public void delete(String tableName, String columnName, String value) {
 
     }
+
+    public static int checkLogin(String username) {
+
+        switch (username) {
+            case "admin" : return 1;
+            case "sales" : return 2;
+            case "cleaning" : return 3;
+            case "mechanic" : return 4;
+            case "bookkeeper" : return 5;
+            default : return 0;
+        }
+    }
+
 }

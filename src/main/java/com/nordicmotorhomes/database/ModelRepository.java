@@ -60,6 +60,11 @@ public class ModelRepository implements IObjectRepository<Modela> {
     }
 
     @Override
+    public Modela readId(int id) {
+        return null;
+    }
+
+    @Override
     public void create(String tableName, Modela object) {
 
     }

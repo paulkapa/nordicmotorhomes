@@ -10,7 +10,7 @@
 <body>
 
 <span class="container">
-        <p> <a href="/" class="btn">LOG-OUT</a> </p>
+        <a href="/" class="btn">LOG-OUT</a>
     </span>
 
 <div class="container">
@@ -52,6 +52,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Cpr</th>
+            <th></th>
         </tr>
         </thead>
 
@@ -60,9 +61,16 @@
             <td th:text="${user.id}"></td>
             <td th:text="${user.fullName}"></td>
             <td th:text="${user.cprNr}"></td>
+            <td>
+                <a th:href="@{'/updateUsers?id=' + ${user.id}}" class="btn btn-update">Update</a>
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <p>
+        <a href="/addUsers" class="btn btn-add ">Add new customer</a>
+    </p>
 
 </div>
 
@@ -87,6 +95,8 @@
             <th>Drop-off Distance</th>
             <th>Km at Drop-Off</th>
             <th>End Date</th>
+            <th>Reserved/Rented</th>
+            <th></th>
         </tr>
         </thead>
 
@@ -104,9 +114,17 @@
             <td th:text="${booking.dropOffDistance}"></td>
             <td th:text="${booking.dropOffKmNr}"></td>
             <td th:text="${booking.endDate}"></td>
+            <td th:text="${booking.reservationRental}"></td>
+            <td>
+                <a th:href="@{'/updateBookings?id=' + ${booking.id}}" class="btn btn-update">Update</a>
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <p>
+        <a href="/addBookings" class="btn btn-add ">Add new booking</a>
+    </p>
 
 </div>
 
@@ -142,96 +160,15 @@
             <td th:text="${motorhome.fuelTankVolume}"></td>
             <td th:text="${motorhome.ppd}"></td>
             <td>
-                <a th:href="@{'/update?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
+                <a th:href="@{'/updateMotorhomes?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
             </td>
         </tr>
         </tbody>
     </table>
 
     <p>
-        <a href="/add" class="btn btn-add ">Add new motorhome</a>
+        <a href="/addMotorhomes" class="btn btn-add ">Add new motorhome</a>
     </p>
-
-</div>
-
-<br>
-<br>
-
-<div class="container">
-
-    <h1>Brands </h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Brand Id</th>
-            <th>Brand</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="brand : ${brnd}">
-            <td th:text="${brand.id}"></td>
-            <td th:text="${brand.brand}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-</div>
-
-<br>
-<br>
-
-<div class="container">
-
-    <h1>Models </h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Model Id</th>
-            <th>Model</th>
-            <th>Max Capacity</th>
-            <th>Fuel tank volume</th>
-            <th>Price per day</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="model : ${mdl}">
-            <td th:text="${model.id}"></td>
-            <td th:text="${model.model}"></td>
-            <td th:text="${model.maxCapacity}"></td>
-            <td th:text="${model.fuelTankVolume}"></td>
-            <td th:text="${model.ppd}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-</div>
-
-<br>
-<br>
-
-<div class="container">
-
-    <h1>Types </h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Type Id</th>
-            <th>Type</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="type : ${type}">
-            <td th:text="${type.id}"></td>
-            <td th:text="${type.type}"></td>
-        </tr>
-        </tbody>
-    </table>
 
 </div>
 
@@ -250,6 +187,7 @@
             <th>Problem</th>
             <th>Solution</th>
             <th>End Date</th>
+            <th></th>
 
         </tr>
         </thead>
@@ -262,9 +200,46 @@
             <td th:text="${repair.problem}"></td>
             <td th:text="${repair.solution}"></td>
             <td th:text="${repair.endDate}"></td>
+            <td>
+                <a th:href="@{'/updateRepairs?id=' + ${repair.repairId}}" class="btn btn-update">Update</a>
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <p>
+        <a href="/addRepairs" class="btn btn-add ">Add new repair</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Extras</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Extra Id</th>
+            <th>Extra</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="extra : ${extra}">
+            <td th:text="${extra.id}"></td>
+            <td th:text="${extra.extra}"></td>
+            <td th:text="${extra.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/addExtras" class="btn btn-add ">Add new extra</a>
+    </p>
 
 </div>
 

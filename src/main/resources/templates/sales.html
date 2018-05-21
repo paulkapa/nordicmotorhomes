@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <!--meta charset="UTF-8"-->
     <link rel="stylesheet" href="style.css" />
@@ -10,5 +10,164 @@
     <span class="container">
         <a href="/" class="btn">LOG-OUT</a>
     </span></body>
+
+<div class="container">
+
+    <h1>Customers</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Cpr</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="user : ${usr}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.fullName}"></td>
+            <td th:text="${user.cprNr}"></td>
+            <td>
+                <a th:href="@{'/updateUsers?id=' + ${user.id}}" class="btn btn-update">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/addUsers" class="btn btn-add ">Add new customer</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Bookings </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Booking Id</th>
+            <th>Motorhome Id</th>
+            <th>User Id</th>
+            <th>Start Date</th>
+            <th>Is Cancelled</th>
+            <th>Cancellation Date</th>
+            <th>Price Per Day</th>
+            <th>Extras</th>
+            <th>Pick-up Distance</th>
+            <th>Drop-off Distance</th>
+            <th>Km at Drop-Off</th>
+            <th>End Date</th>
+            <th>Reserved/Rented</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="booking : ${bkn}">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.mtrhmId}"></td>
+            <td th:text="${booking.userId}"></td>
+            <td th:text="${booking.startDate}"></td>
+            <td th:text="${booking.isCancelled}"></td>
+            <td th:text="${booking.cancellationDate}"></td>
+            <td th:text="${booking.ppd}"></td>
+            <td th:text="${booking.extrasPrice}"></td>
+            <td th:text="${booking.pickUpDistance}"></td>
+            <td th:text="${booking.dropOffDistance}"></td>
+            <td th:text="${booking.dropOffKmNr}"></td>
+            <td th:text="${booking.endDate}"></td>
+            <td th:text="${booking.reservationRental}"></td>
+            <td>
+                <a th:href="@{'/updateBookings?id=' + ${booking.id}}" class="btn btn-update">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/addBookings" class="btn btn-add ">Add new booking</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Motorhomes</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Motorhome Id</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Is Available</th>
+            <th>Max Capacity (persons)</th>
+            <th>Fuel Tank Volume (L/kg)</th>
+            <th>Price Per Day</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="motorhome : ${mtrhm}">
+            <td th:text="${motorhome.id}"></td>
+            <td th:text="${motorhome.type}"></td>
+            <td th:text="${motorhome.brand}"></td>
+            <td th:text="${motorhome.model}"></td>
+            <td th:text="${motorhome.isAvailable}"></td>
+            <td th:text="${motorhome.maxCapacity}"></td>
+            <td th:text="${motorhome.fuelTankVolume}"></td>
+            <td th:text="${motorhome.ppd}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1>Extras</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Extra Id</th>
+            <th>Extra</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="extra : ${extra}">
+            <td th:text="${extra.id}"></td>
+            <td th:text="${extra.extra}"></td>
+            <td th:text="${extra.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/addExtras" class="btn btn-add ">Add new extra</a>
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<p class = "footer">
+    Made by Cristina, Sebi, Dragos and Paul - KEA 2018
+</p>
 
 </html>

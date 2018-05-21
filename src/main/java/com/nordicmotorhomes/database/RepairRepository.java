@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class RepairRepository implements IObjectRepository {
+public class RepairRepository implements IObjectRepository<Repair> {
 
     private static Connection conn = DBConnection.getConnection();;
     private PreparedStatement preparedStatement;
@@ -16,7 +16,7 @@ public class RepairRepository implements IObjectRepository {
 
 
     @Override
-    public ArrayList readAll(String tableName) {
+    public ArrayList<Repair> readAll(String tableName) {
         ArrayList<Repair> repairList = new ArrayList<>();
 
         try {
@@ -25,8 +25,8 @@ public class RepairRepository implements IObjectRepository {
 
             while (result.next()){
                 repairList.add(new Repair(result.getInt("pKey_repairId"), result.getInt("fKey_mtrhmId"),
-                        result.getDate("startDate").toLocalDate(), result.getString("problem"),
-                        result.getString("solution"), result.getDate("endDate").toLocalDate()));
+                        result.getDate("startDate"), result.getString("problem"),
+                        result.getString("solution"), result.getDate("endDate")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class RepairRepository implements IObjectRepository {
 
 
     @Override
-    public Object read(String tableName, String columnName, String value) {
+    public Repair read(String tableName, String columnName, String value) {
         return null;
     }
 
@@ -46,13 +46,29 @@ public class RepairRepository implements IObjectRepository {
     }
 
     @Override
-    public void create(String tableName, Object object) {
+    public Repair readId(int id) {
+        return null;
+    }
+
+    @Override
+    public void update(String tableName, Repair object) {
 
     }
 
     @Override
-    public void update(String tableName, Object object) {
+    public void create(String tableName, Repair object) {
+        try {
 
+            preparedStatement = conn.prepareStatement("INSERT INTO mtrhms_repairs(startDate, problem, solution, endDate)  VALUE (?, ?, ?, ?)");
+
+            preparedStatement.setDate(1, object.getStartDate());
+            preparedStatement.setString(2, object.getProblem());
+            preparedStatement.setString(3, object.getSolution());
+            preparedStatement.setDate(4, object.getEndDate());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

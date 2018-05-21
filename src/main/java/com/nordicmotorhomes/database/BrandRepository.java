@@ -58,6 +58,11 @@ public class BrandRepository implements IObjectRepository<Brand> {
     }
 
     @Override
+    public Brand readId(int id) {
+        return null;
+    }
+
+    @Override
     public void create(String tableName, Brand object) {
 
     }

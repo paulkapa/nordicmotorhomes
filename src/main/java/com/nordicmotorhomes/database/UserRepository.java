@@ -58,6 +58,11 @@ public class UserRepository implements IObjectRepository<User> {
     }
 
     @Override
+    public User readId(int id) {
+        return null;
+    }
+
+    @Override
     public User read(String tableName, String columnName, String value) {
         return null;
     }

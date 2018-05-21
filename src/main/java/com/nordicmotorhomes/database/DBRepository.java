@@ -56,6 +56,11 @@ public class DBRepository implements IObjectRepository {
     }
 
     @Override
+    public Object readId(int id) {
+        return null;
+    }
+
+    @Override
     public void create(String tableName, Object object) {
 
         try {

@@ -58,6 +58,11 @@ public class TypeRepository implements IObjectRepository<Type> {
     }
 
     @Override
+    public Type readId(int id) {
+        return null;
+    }
+
+    @Override
     public void create(String tableName, Type object) {
 
     }

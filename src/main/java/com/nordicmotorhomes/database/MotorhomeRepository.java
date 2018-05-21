@@ -64,12 +64,11 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
     public boolean readOne(String tableName, String value1, String value2) {
         return false;
     }
-    /*
-    public Motorhome readOne(int id) {
 
-
+    @Override
+    public Motorhome readId(int id) {
+        return null;
     }
-    */
 
     @Override
     public void create(String tableName, Motorhome object) {

@@ -26,7 +26,7 @@ public class BookingRepository implements IObjectRepository<Booking> {
             result = preparedStatement.executeQuery();
 
             while (result.next()){
-                bookings.add(new Booking(result.getInt("pKey_bookingId"), result.getInt("fKey_mtrhmsId"), result.getInt("fKey_usersId"), result.getDate("startDate"), result.getInt("isCanceled"), result.getDate("cancellation_Date"), result.getInt("ppd"), result.getInt("extras_price"), result.getInt("pickUp_distance"), result.getInt("dropOff_distance"), result.getInt("dropOff_nrOfKm"), result.getDate("endDate")));
+                bookings.add(new Booking(result.getInt("pKey_bookingId"), result.getInt("fKey_mtrhmsId"), result.getInt("fKey_usersId"), result.getDate("startDate"), result.getInt("isCanceled"), result.getDate("cancellation_Date"), result.getInt("ppd"), result.getInt("extras_price"), result.getInt("pickUp_distance"), result.getInt("dropOff_distance"), result.getInt("dropOff_nrOfKm"), result.getDate("endDate"), result.getString("reservation_rental")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,6 +42,11 @@ public class BookingRepository implements IObjectRepository<Booking> {
     @Override
     public boolean readOne(String tableName, String value1, String value2) {
         return false;
+    }
+
+    @Override
+    public Booking readId(int id) {
+        return null;
     }
 
     @Override
