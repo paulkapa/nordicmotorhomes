@@ -5,10 +5,7 @@ import com.nordicmotorhomes.model.Modela;
 import com.nordicmotorhomes.model.Motorhome;
 import com.nordicmotorhomes.model.Type;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MotorhomeRepository implements IObjectRepository<Motorhome> {
@@ -217,7 +214,7 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
     }
 
     private int checkBooking(int motorhomeId) {
-
+        Date date = new Date(System.currentTimeMillis());
         int isAvailable = 1;
 
         PreparedStatement preparedStatement;
@@ -229,7 +226,7 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
             result = preparedStatement.executeQuery();
 
             while(result.next() && isAvailable == 1){
-                if(result.getInt("fKey_mtrhmsId") == motorhomeId) {
+                if(result.getInt("fKey_mtrhmsId") == motorhomeId && ((date.after(result.getDate("startDate")) && date.before(result.getDate("endDate"))) && result.getInt("isCancelled") != 1)) {
                     isAvailable = 0;
                 }
             }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CalculatePrice</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Calculate the price for booking</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Booking Id</th>
+            <th>Motorhome Id</th>
+            <th>User Id</th>
+            <th>Start Date</th>
+            <th>Is Cancelled</th>
+            <th>Cancellation Date</th>
+            <th>Price Per Day</th>
+            <th>Extras</th>
+            <th>Pick-up Distance</th>
+            <th>Drop-off Distance</th>
+            <th>Km at Drop-Off</th>
+            <th>End Date</th>
+            <th>Reserved/Rented</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="booking : ${bkn}">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.mtrhmId}"></td>
+            <td th:text="${booking.userId}"></td>
+            <td th:text="${booking.startDate}"></td>
+            <td th:text="${booking.isCancelled}"></td>
+            <td th:text="${booking.cancellationDate}"></td>
+            <td th:text="${booking.ppd}"></td>
+            <td th:text="${booking.extrasPrice}"></td>
+            <td th:text="${booking.pickUpDistance}"></td>
+            <td th:text="${booking.dropOffDistance}"></td>
+            <td th:text="${booking.dropOffKmNr}"></td>
+            <td th:text="${booking.endDate}"></td>
+            <td th:text="${booking.reservationRental}"></td>
+            <td>
+                <a th:href="@{'/updateBookings?id=' + ${booking.id}}" class="btn btn-update">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <span th:text="'Total price after calculation: ' + ${booking.totalPrice}"></span>
+
+    <form action="/calculatePrice" method="post">
+
+        <p>Price Per Day: <input type="text" name="ppd" /></p>
+        <p>Extras Price: <input type="text" name="extrasPrice" /></p>
+        <p>Pick-up Distance: <input type="text" name="pickUpDistance" /></p>
+        <p>Drop-off Distance: <input type="text" name="dropOffDistance" /></p>
+        <p>Nr of KM at Drop-off: <input type="text" name="dropOffKmNr" /></p>
+        <p>Total Price: <input type="text" name="totalPrice" /></p>
+        <input type="submit" value="Calculate" class="btn btn-add"/>
+    </form>
+
+</div>
+
+<p class = "footer">
+    Made by Cristina, Sebi, Dragos and Paul - KEA 2018
+</p>
+
+</body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>AddRepairs</title>
+    <title>AddRental</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <div class="container">
 
-    <h1>Add Repairs</h1>
+    <h1>Add Rental</h1>
+
+    <div class="container">
 
         <h1>Motorhomes</h1>
         <table>
@@ -22,7 +24,6 @@
                 <th>Max Capacity (persons)</th>
                 <th>Fuel Tank Volume (L/kg)</th>
                 <th>Price Per Day</th>
-                <th></th>
             </tr>
             </thead>
 
@@ -40,15 +41,49 @@
             </tbody>
         </table>
 
+    </div>
+
     <br>
 
-    <form action="/addRepairs" method="post">
+    <div class="container">
 
-        <p>Motorhome Id: <input type="text" name="motorhomeId" /></p>
+        <h1>Customers</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Cpr</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${usr}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.fullName}"></td>
+                <td th:text="${user.cprNr}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <form action="/addRental" method="post">
+
+        <p>Motorhome Id: <input type="text" name="mtrhmId" /></p>
+        <p>User Id: <input type="text" name="userId" /></p>
         <p>Start Date: <input type="date" name="startDate" /></p>
-        <p>Problem: <input type="text" name="problem" /></p>
-        <p>Solution: <input type="text" name="solution" /></p>
+        <p>Is Cancelled: <input type="text" name="isCancelled" /></p>
+        <p>Cancellation Date: <input type="date" name="cancellationDate" /></p>
+        <p>Price Per Day: <input type="text" name="ppd" /></p>
+        <p>Extras Price: <input type="text" name="extrasPrice" /></p>
+        <p>Pick-up Distance: <input type="text" name="pickUpDistance" /></p>
+        <p>Drop-off Distance: <input type="text" name="dropOffDistance" /></p>
+        <p>Nr of KM at Drop-off: <input type="text" name="dropOffKmNr" /></p>
         <p>End Date: <input type="date" name="endDate" /></p>
+        <p>Reserved/Rented: <input type="text" name="reservationRental" /></p>
         <input type="submit" value="Add" class="btn btn-add"/>
     </form>
 

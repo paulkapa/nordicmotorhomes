@@ -4,11 +4,10 @@ import com.nordicmotorhomes.database.*;
 import com.nordicmotorhomes.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
+import java.sql.Date;
 import java.util.ArrayList;
 
 
@@ -157,8 +156,7 @@ public class ctrl {
 
         try {
             extraRepository.create("extras", extra);
-            extra.setId(extraList.size()+1);
-            extraList.add(extra);
+            extraList = extraRepository.readAll("extra");
         } catch (Exception e) {
         }
 
@@ -175,8 +173,9 @@ public class ctrl {
     }
 
     @GetMapping("/addRepairs")
-    public String addRepairs() {
+    public String addRepairs(Model model) {
         if(logInAccess == 1 || logInAccess == 4) {
+            model.addAttribute("mtrhm", motorhomeList);
             return "addRepairs";
         }
         else {
@@ -189,9 +188,8 @@ public class ctrl {
     public String addRepairs(@ModelAttribute Repair repair) {
 
         try {
-            extraRepository.create("mtrhms_repairs", repair);
-            repair.setRepairId(repairList.size()+1);
-            repairList.add(repair);
+            repairRepository.create("mtrhms_repairs", repair);
+            repairList = repairRepository.readAll("mtrhms_repairs");
         } catch (Exception e) {
         }
 
@@ -222,9 +220,44 @@ public class ctrl {
     public String addBookings(@ModelAttribute Booking booking) {
 
         try {
-            extraRepository.create("mtrhms_bookings", booking);
-            booking.setId(bookingList.size()+1);
-            bookingList.add(booking);
+            bookingRepository.create("mtrhms_bookings", booking);
+            bookingList = bookingRepository.readAll("mtrhms_bookings");
+        } catch (Exception e) {
+        }
+
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 2:
+                return "redirect:/sales";
+            case 3:
+                return "redirect:/cleaning";
+            case 5:
+                return "redirect:/bookkeeper";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/addRental")
+    public String addRental(Model model) {
+        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 3 || logInAccess == 5) {
+            model.addAttribute("mtrhm", motorhomeList);
+            model.addAttribute("usr", userList);
+            return "addRental";
+        }
+        else {
+            return "redirect:/";
+        }
+
+    }
+
+    @PostMapping("/addRental")
+    public String addRental(@ModelAttribute Booking booking) {
+
+        try {
+            bookingRepository.create("mtrhms_bookings", booking);
+            bookingList = bookingRepository.readAll("mtrhms_bookings");
         } catch (Exception e) {
         }
 
@@ -307,6 +340,76 @@ public class ctrl {
                 return "redirect:/sales";
             case 5:
                 return "redirect:/bookkeeper";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/calculatePrice")
+    public String calculatePrice() {
+        if(logInAccess == 2) {
+            return "calculatePrice";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/calculatePrice")
+    public String calculatePrice(@RequestParam("id") int id, Model model) {
+        double totalPrice = 0;
+
+        Booking booking = (Booking) bookingRepository.read("mtrhms_bookings", "pKey_bookingId", String.valueOf(id));
+
+        long diff = (booking.getStartDate().getTime()-booking.getCancellationDate().getTime()) / 86400000;
+
+        if(booking.getIsCancelled() == 1) {
+
+            if(diff>=0 && diff <15) {
+                totalPrice = 0.95 * booking.getPpd();
+            } else if(diff>=15 && diff<=49) {
+                totalPrice = 0.5 * booking.getPpd();
+            } else if(diff>49) {
+                totalPrice = 0.2 * booking.getPpd();
+            }
+
+            if(totalPrice < 200) {
+                totalPrice = 200;
+            }
+
+        } else if(booking.getStartDate().getMonth() >= 1 && booking.getStartDate().getMonth() < 4) {
+
+            totalPrice = booking.getPpd() + booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
+
+            if(booking.getDropOffKmNr()>400)
+                totalPrice = totalPrice + booking.getDropOffKmNr() - 400;
+
+        } else if(booking.getStartDate().getMonth() >= 4 && booking.getStartDate().getMonth() < 8) {
+
+            totalPrice = booking.getPpd() * 1.3 + booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
+
+            if(booking.getDropOffKmNr()>400)
+                totalPrice = totalPrice + booking.getDropOffKmNr() - 400;
+
+        } else if(booking.getStartDate().getMonth() >=8 && booking.getStartDate().getMonth() <= 12) {
+
+            totalPrice = booking.getPpd() * 1.6 + booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
+
+            if(booking.getDropOffKmNr()>400)
+                totalPrice = totalPrice + booking.getDropOffKmNr() - 400;
+
+        }
+
+        booking.setTotalPrice((int) totalPrice);
+
+        model.addAttribute("bkng", booking);
+
+        bookingRepository.update("mtrhms_booking", booking);
+
+        bookingList = bookingRepository.readAll("mtrhms_booking");
+
+        switch (logInAccess) {
+            case 2:
+                return "redirect:/sales";
         }
 
         return "redirect:/";

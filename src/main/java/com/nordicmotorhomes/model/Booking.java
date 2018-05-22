@@ -25,6 +25,35 @@ public class Booking {
     private int totalPrice;
     private String isPaid;
 
+    public Booking() {
+
+    }
+
+    public Booking(int mtrhmId, int userId, Date startDate,Date endDate) {
+        this.mtrhmId = mtrhmId;
+        this.userId = userId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.reservationRental = "reservation";
+    }
+
+    public Booking(int id, int mtrhmId, int userId, Date startDate, int isCancelled, Date cancellationDate, int ppd, int extrasPrice,
+                   int pickUpDistance, int dropOffDistance, int dropOffKmNr, Date endDate, String reservationRental) {
+        this.id = id;
+        this.mtrhmId = mtrhmId;
+        this.userId = userId;
+        this.startDate = startDate;
+        this.isCancelled = isCancelled;
+        this.cancellationDate = cancellationDate;
+        this.ppd = ppd;
+        this.extrasPrice = extrasPrice;
+        this.pickUpDistance = pickUpDistance;
+        this.dropOffDistance = dropOffDistance;
+        this.dropOffKmNr = dropOffKmNr;
+        this.endDate = endDate;
+        this.reservationRental = reservationRental;
+    }
+
     public Booking(int id, int mtrhmId, int userId, Date startDate, int isCancelled, Date cancellationDate, int ppd, int extrasPrice,
                    int pickUpDistance, int dropOffDistance, int dropOffKmNr, Date endDate, String reservationRental, int totalPrice, String isPaid) {
         this.id = id;

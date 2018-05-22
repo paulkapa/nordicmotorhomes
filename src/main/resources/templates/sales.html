@@ -84,7 +84,7 @@
             <td th:text="${booking.endDate}"></td>
             <td th:text="${booking.reservationRental}"></td>
             <td>
-                <a th:href="@{'/updateBookings?id=' + ${booking.id}}" class="btn btn-update">Update</a>
+                <a th:href="@{'/updateBookings?id=' + ${booking.id}}" class="btn btn-update">Update</a>     <a th:href="@{'/calculatePrice?id=' + ${booking.id}}" class="btn btn-update">Calculate price</a>      <a th:href="@{'/printContract?id=' + ${booking.id}}" class="btn btn-update">Print contract</a>
             </td>
         </tr>
         </tbody>
