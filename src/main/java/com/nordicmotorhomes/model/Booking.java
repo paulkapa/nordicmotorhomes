@@ -22,8 +22,11 @@ public class Booking {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     private String reservationRental;
+    private int totalPrice;
+    private String isPaid;
 
-    public Booking(int id, int mtrhmId, int userId, Date startDate, int isCancelled, Date cancellationDate, int ppd, int extrasPrice, int pickUpDistance, int dropOffDistance, int dropOffKmNr, Date endDate, String reservationRental) {
+    public Booking(int id, int mtrhmId, int userId, Date startDate, int isCancelled, Date cancellationDate, int ppd, int extrasPrice,
+                   int pickUpDistance, int dropOffDistance, int dropOffKmNr, Date endDate, String reservationRental, int totalPrice, String isPaid) {
         this.id = id;
         this.mtrhmId = mtrhmId;
         this.userId = userId;
@@ -37,6 +40,8 @@ public class Booking {
         this.dropOffKmNr = dropOffKmNr;
         this.endDate = endDate;
         this.reservationRental = reservationRental;
+        this.totalPrice = totalPrice;
+        this.isPaid = isPaid;
     }
 
     public int getId() {
@@ -143,6 +148,22 @@ public class Booking {
         this.reservationRental = reservationRental;
     }
 
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(String isPaid) {
+        this.isPaid = isPaid;
+    }
+
     public String toString() {
         return "Booking{" +
                 "id=" + id +
@@ -158,6 +179,8 @@ public class Booking {
                 ", dropOffKmNr=" + dropOffKmNr +
                 ", endDate=" + endDate +
                 ", reservationRental='" + reservationRental + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", isPaid='" + isPaid + '\'' +
                 '}';
     }
 }

@@ -113,6 +113,7 @@
                 <th>Max Capacity (persons)</th>
                 <th>Fuel Tank Volume (L/kg)</th>
                 <th>Price Per Day</th>
+                <th></th>
             </tr>
             </thead>
 
@@ -126,6 +127,9 @@
                 <td th:text="${motorhome.maxCapacity}"></td>
                 <td th:text="${motorhome.fuelTankVolume}"></td>
                 <td th:text="${motorhome.ppd}"></td>
+                <td>
+                    <a th:href="@{'/updateMotorhomes?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
+                </td>
             </tr>
             </tbody>
         </table>

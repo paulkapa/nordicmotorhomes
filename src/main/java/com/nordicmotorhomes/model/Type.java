@@ -5,6 +5,14 @@ public class Type {
     private int id;
     private String type;
 
+    public Type() {
+
+    }
+
+    public Type(String type) {
+        this.type = type;
+    }
+
     public Type(int id, String type) {
         this.id = id;
         this.type = type;

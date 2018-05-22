@@ -29,7 +29,6 @@ public class ctrl {
     private static ArrayList<User> userList;
     private static ArrayList<Booking> bookingList;
     private static ArrayList<Motorhome> motorhomeList;
-    private static ArrayList<Modela> modelList;
     private static ArrayList<Repair> repairList;
     private static ArrayList<Extra> extraList;
 
@@ -39,7 +38,6 @@ public class ctrl {
         userList = userRepository.readAll("users");
         bookingList = bookingRepository.readAll("mtrhms_bookings");
         motorhomeList = motorhomeRepository.readAll("mtrhms");
-        modelList = modelRepository.readAll("models");
         repairList = repairRepository.readAll("mtrhms_repairs");
         extraList = extraRepository.readAll("extras");
     }
@@ -74,7 +72,6 @@ public class ctrl {
         model.addAttribute("usr", userList);
         model.addAttribute("bkn", bookingList);
         model.addAttribute("mtrhm", motorhomeList);
-        model.addAttribute("mdl", modelList);
         model.addAttribute("repair", repairList);
         model.addAttribute("extra", extraList);
 
@@ -117,6 +114,7 @@ public class ctrl {
     @GetMapping("/mechanic")
     public String getMechanicPage(Model model) {
 
+        model.addAttribute("bkn", bookingList);
         model.addAttribute("mtrhm", motorhomeList);
         model.addAttribute("repair", repairList);
 
@@ -145,7 +143,7 @@ public class ctrl {
 
     @GetMapping("/addExtras")
     public String addExtras() {
-        if(logInAccess!=0) {
+        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 5) {
             return "addExtras";
         }
         else {
@@ -178,7 +176,7 @@ public class ctrl {
 
     @GetMapping("/addRepairs")
     public String addRepairs() {
-        if(logInAccess!=0) {
+        if(logInAccess == 1 || logInAccess == 4) {
             return "addRepairs";
         }
         else {
@@ -202,6 +200,113 @@ public class ctrl {
                 return "redirect:/admin";
             case 4:
                 return "redirect:/mechanic";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/addBookings")
+    public String addBookings(Model model) {
+        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 3 || logInAccess == 5) {
+            model.addAttribute("mtrhm", motorhomeList);
+            model.addAttribute("usr", userList);
+            return "addBookings";
+        }
+        else {
+            return "redirect:/";
+        }
+
+    }
+
+    @PostMapping("/addBookings")
+    public String addBookings(@ModelAttribute Booking booking) {
+
+        try {
+            extraRepository.create("mtrhms_bookings", booking);
+            booking.setId(bookingList.size()+1);
+            bookingList.add(booking);
+        } catch (Exception e) {
+        }
+
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 2:
+                return "redirect:/sales";
+            case 3:
+                return "redirect:/cleaning";
+            case 5:
+                return "redirect:/bookkeeper";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/addMotorhomes")
+    public String addMotorhomes() {
+        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 3 || logInAccess == 4 || logInAccess == 5) {
+            return "addMotorhomes";
+        }
+        else {
+            return "redirect:/";
+        }
+
+    }
+
+    @PostMapping("/addMotorhomes")
+    public String addMotorhomes(@ModelAttribute Motorhome motorhome) {
+
+        try {
+            motorhomeRepository.create("mtrhms", motorhome);
+            motorhomeList = motorhomeRepository.readAll("mtrhms");
+        } catch (Exception e) {
+
+        }
+
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 2:
+                return "redirect:/sales";
+            case 3:
+                return "redirect:/cleaning";
+            case 4:
+                return "redirect:/mechanic";
+            case 5:
+                return "redirect:/bookkeeper";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/addUsers")
+    public String addUsers() {
+        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 5) {
+            return "addUsers";
+        }
+        else {
+            return "redirect:/";
+        }
+
+    }
+
+    @PostMapping("/addUsers")
+    public String addUsers(@ModelAttribute User user) {
+
+        try {
+            userRepository.create("users", user);
+            userList = userRepository.readAll("user");
+        } catch (Exception e) {
+
+        }
+
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 2:
+                return "redirect:/sales";
+            case 5:
+                return "redirect:/bookkeeper";
         }
 
         return "redirect:/";

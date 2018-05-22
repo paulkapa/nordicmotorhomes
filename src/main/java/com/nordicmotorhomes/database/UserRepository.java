@@ -70,6 +70,16 @@ public class UserRepository implements IObjectRepository<User> {
     @Override
     public void create(String tableName, User object) {
 
+        try {
+
+            preparedStatement = conn.prepareStatement("INSERT INTO users(fullName, cprNr) VALUES (?, ?)");
+
+            preparedStatement.setString(1, object.getFullName());
+            preparedStatement.setString(2, object.getCprNr());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

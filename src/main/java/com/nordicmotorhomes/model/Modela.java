@@ -8,6 +8,17 @@ public class Modela {
     private int fuelTankVolume;
     private int ppd;
 
+    public Modela() {
+
+    }
+
+    public Modela(String model, int maxCapacity, int fuelTankVolume, int ppd) {
+        this.model = model;
+        this.maxCapacity = maxCapacity;
+        this.fuelTankVolume = fuelTankVolume;
+        this.ppd = ppd;
+    }
+
     public Modela(int id, String model, int maxCapacity, int fuelTankVolume, int ppd) {
         this.id = id;
         this.model = model;

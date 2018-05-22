@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AddBookings</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Add Booking</h1>
+
+    <div class="container">
+
+        <h1>Motorhomes</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Motorhome Id</th>
+                <th>Type</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Is Available</th>
+                <th>Max Capacity (persons)</th>
+                <th>Fuel Tank Volume (L/kg)</th>
+                <th>Price Per Day</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="motorhome : ${mtrhm}">
+                <td th:text="${motorhome.id}"></td>
+                <td th:text="${motorhome.type}"></td>
+                <td th:text="${motorhome.brand}"></td>
+                <td th:text="${motorhome.model}"></td>
+                <td th:text="${motorhome.isAvailable}"></td>
+                <td th:text="${motorhome.maxCapacity}"></td>
+                <td th:text="${motorhome.fuelTankVolume}"></td>
+                <td th:text="${motorhome.ppd}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <br>
+
+    <div class="container">
+
+        <h1>Customers</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Cpr</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${usr}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.fullName}"></td>
+                <td th:text="${user.cprNr}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <form action="/addBooking" method="post">
+
+        <p>Motorhome Id: <input type="text" name="mtrhmId" /></p>
+        <p>User Id: <input type="text" name="userId" /></p>
+        <p>Start Date: <input type="date" name="startDate" /></p>
+        <p>Is Cancelled: <input type="text" name="isCancelled" /></p>
+        <p>Cancellation Date: <input type="date" name="cancellationDate" /></p>
+        <p>Price Per Day: <input type="text" name="ppd" /></p>
+        <p>Extras Price: <input type="text" name="extrasPrice" /></p>
+        <p>Pick-up Distance: <input type="text" name="pickUpDistance" /></p>
+        <p>Drop-off Distance: <input type="text" name="dropOffDistance" /></p>
+        <p>Nr of KM at Drop-off: <input type="text" name="dropOffKmNr" /></p>
+        <p>End Date: <input type="date" name="endDate" /></p>
+        <p>Reserved/Rented: <input type="text" name="reservationRental" /></p>
+        <p>Total Price: <input type="text" name="totalPrice" /></p>
+        <p>Is Paid: <input type="text" name="isPaid" /></p>
+        <input type="submit" value="Add" class="btn btn-add"/>
+    </form>
+
+</div>
+
+<p class = "footer">
+    Made by Cristina, Sebi, Dragos and Paul - KEA 2018
+</p>
+
+</body>
+</html>

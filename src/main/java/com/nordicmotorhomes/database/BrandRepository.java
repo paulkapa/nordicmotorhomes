@@ -64,7 +64,16 @@ public class BrandRepository implements IObjectRepository<Brand> {
 
     @Override
     public void create(String tableName, Brand object) {
+        try {
 
+            preparedStatement = conn.prepareStatement("INSERT INTO  brands(brand) VALUES (?)");
+
+            preparedStatement.setString(1, object.getBrand());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

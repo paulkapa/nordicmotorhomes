@@ -15,6 +15,16 @@ public class Motorhome {
 
     }
 
+    public Motorhome(String type, String brand, String model, int isAvailable, int maxCapacity, int fuelTankVolume, int ppd) {
+        this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.isAvailable = isAvailable;
+        this.maxCapacity = maxCapacity;
+        this.fuelTankVolume = fuelTankVolume;
+        this.ppd = ppd;
+    }
+
     public Motorhome(int id, String type, String brand, String model, int isAvailable, int maxCapacity, int fuelTankVolume, int ppd) {
         this.id = id;
         this.type = type;

@@ -5,6 +5,14 @@ public class Brand {
     private int id;
     private String brand;
 
+    public Brand() {
+
+    }
+
+    public Brand(String brand) {
+        this.brand = brand;
+    }
+
     public Brand(int id, String brand) {
         this.id = id;
         this.brand = brand;

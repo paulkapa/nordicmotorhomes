@@ -57,7 +57,19 @@ public class DBRepository implements IObjectRepository {
 
     @Override
     public Object readId(int id) {
-        return null;
+        Object object = null;
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM table_name WHERE column_name = '"+ id +"'");
+            result = preparedStatement.executeQuery();
+
+            if (result.next()){
+                object = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 
     @Override

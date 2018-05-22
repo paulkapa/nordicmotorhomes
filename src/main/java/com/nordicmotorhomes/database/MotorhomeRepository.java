@@ -73,16 +73,24 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
     @Override
     public void create(String tableName, Motorhome object) {
 
+        try {
+
+            preparedStatement = conn.prepareStatement("INSERT INTO mtrhms(fKey_typeId, fKey_brandId, fKey_modelId, isAvailable) VALUES(?, ?, ?, ?)") ;
+            preparedStatement.setInt(1, readType(object.getType()).getId());
+            preparedStatement.setInt(2, readBrand(object.getBrand()).getId());
+            preparedStatement.setInt(3, readModel(object).getId());
+            preparedStatement.setInt(4, object.getIsAvailable());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void update(String tableName, Motorhome object) {
-
-    }
-
-    /*
-    public void update(Motorhome motorhome) {
-
+        /*
         try {
             preparedStatement = conn.prepareStatement("UPDATE mtrhms SET fKey = ?, last_name = ?, enrollment_date = ?, cpr = ? WHERE id = ?");
             preparedStatement.setString(1, student.getName());
@@ -96,15 +104,119 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-    }
     */
+    }
+
+
     @Override
     public void delete(String tableName, String columnName, String value) {
 
     }
 
-    public int checkBooking(int motorhomeId) {
+    private Type readType(String string) {
+        Type object = null;
+
+        PreparedStatement preparedStatement;
+        ResultSet result;
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM types WHERE type = '"+ string +"'");
+            result = preparedStatement.executeQuery();
+
+            if (result.next()){
+                object = new Type(result.getInt("pKey_typeId"), string);
+            }
+            else {
+                result = null;
+                typeRepository.create("type", new Type(string));
+
+                try {
+                    preparedStatement = conn.prepareStatement("SELECT * FROM types WHERE type = '"+ string +"'");
+                    result = preparedStatement.executeQuery();
+
+                    if (result.next()){
+                        object = new Type(result.getInt("pKey_typeId"), string);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
+    private Brand readBrand(String string) {
+        Brand object = null;
+
+        PreparedStatement preparedStatement;
+        ResultSet result;
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM brands WHERE brand = '"+ string +"'");
+            result = preparedStatement.executeQuery();
+
+            if (result.next()){
+                object = new Brand(result.getInt("pKey_brandId"), string);
+            }
+            else {
+                result = null;
+                brandRepository.create("brand", new Brand(string));
+
+                try {
+                    preparedStatement = conn.prepareStatement("SELECT * FROM brands WHERE brand = '"+ string +"'");
+                    result = preparedStatement.executeQuery();
+
+                    if (result.next()){
+                        object = new Brand(result.getInt("pKey_brandId"), string);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
+    private Modela readModel(Motorhome motorhome) {
+        Modela object = null;
+
+        PreparedStatement preparedStatement;
+        ResultSet result;
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM models WHERE model = '"+ motorhome.getModel() +"'");
+            result = preparedStatement.executeQuery();
+
+            if (result.next()){
+                object = new Modela(motorhome.getModel(), motorhome.getMaxCapacity(), motorhome.getFuelTankVolume(), motorhome.getPpd());
+            }
+            else {
+                result = null;
+
+                modelRepository.create("models", new Modela(motorhome.getModel(), motorhome.getMaxCapacity(), motorhome.getFuelTankVolume(), motorhome.getPpd()));
+
+                try {
+                    preparedStatement = conn.prepareStatement("SELECT * FROM models WHERE model = '"+ motorhome.getModel() +"'");
+                    result = preparedStatement.executeQuery();
+
+                    if (result.next()){
+                        object = new Modela(result.getInt("pKey_modelId"), motorhome.getModel(), motorhome.getMaxCapacity(), motorhome.getFuelTankVolume(), motorhome.getPpd());
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
+    private int checkBooking(int motorhomeId) {
 
         int isAvailable = 1;
 

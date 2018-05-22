@@ -66,7 +66,19 @@ public class ModelRepository implements IObjectRepository<Modela> {
 
     @Override
     public void create(String tableName, Modela object) {
+        try {
 
+            preparedStatement = conn.prepareStatement("INSERT INTO  models(model, max_capacity, fuelTank_volume, ppd) VALUES (?, ?, ?, ?)");
+
+            preparedStatement.setString(1, object.getModel());
+            preparedStatement.setInt(2, object.getMaxCapacity());
+            preparedStatement.setInt(3, object.getFuelTankVolume());
+            preparedStatement.setInt(4, object.getPpd());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

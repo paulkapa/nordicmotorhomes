@@ -64,7 +64,16 @@ public class TypeRepository implements IObjectRepository<Type> {
 
     @Override
     public void create(String tableName, Type object) {
+        try {
 
+            preparedStatement = conn.prepareStatement("INSERT INTO  types(type) VALUES (?)");
+
+            preparedStatement.setString(1, object.getType());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
