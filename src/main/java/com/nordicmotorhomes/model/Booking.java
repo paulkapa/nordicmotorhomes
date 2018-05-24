@@ -2,7 +2,7 @@ package com.nordicmotorhomes.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Booking {
 
@@ -10,17 +10,17 @@ public class Booking {
     private int mtrhmId;
     private int userId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private LocalDate startDate;
     private int isCancelled;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date cancellationDate;
+    private LocalDate cancellationDate;
     private int ppd;
     private int extrasPrice;
     private int pickUpDistance;
     private int dropOffDistance;
     private int dropOffKmNr;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
+    private LocalDate endDate;
     private String reservationRental;
     private int totalPrice;
     private String isPaid;
@@ -29,33 +29,8 @@ public class Booking {
 
     }
 
-    public Booking(int mtrhmId, int userId, Date startDate,Date endDate) {
-        this.mtrhmId = mtrhmId;
-        this.userId = userId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.reservationRental = "reservation";
-    }
-
-    public Booking(int id, int mtrhmId, int userId, Date startDate, int isCancelled, Date cancellationDate, int ppd, int extrasPrice,
-                   int pickUpDistance, int dropOffDistance, int dropOffKmNr, Date endDate, String reservationRental) {
-        this.id = id;
-        this.mtrhmId = mtrhmId;
-        this.userId = userId;
-        this.startDate = startDate;
-        this.isCancelled = isCancelled;
-        this.cancellationDate = cancellationDate;
-        this.ppd = ppd;
-        this.extrasPrice = extrasPrice;
-        this.pickUpDistance = pickUpDistance;
-        this.dropOffDistance = dropOffDistance;
-        this.dropOffKmNr = dropOffKmNr;
-        this.endDate = endDate;
-        this.reservationRental = reservationRental;
-    }
-
-    public Booking(int id, int mtrhmId, int userId, Date startDate, int isCancelled, Date cancellationDate, int ppd, int extrasPrice,
-                   int pickUpDistance, int dropOffDistance, int dropOffKmNr, Date endDate, String reservationRental, int totalPrice, String isPaid) {
+    public Booking(int id, int mtrhmId, int userId, LocalDate startDate, int isCancelled, LocalDate cancellationDate, int ppd, int extrasPrice,
+                   int pickUpDistance, int dropOffDistance, int dropOffKmNr, LocalDate endDate, String reservationRental, int totalPrice, String isPaid) {
         this.id = id;
         this.mtrhmId = mtrhmId;
         this.userId = userId;
@@ -97,11 +72,11 @@ public class Booking {
         this.userId = userId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -113,11 +88,11 @@ public class Booking {
         this.isCancelled = isCancelled;
     }
 
-    public Date getCancellationDate() {
+    public LocalDate getCancellationDate() {
         return cancellationDate;
     }
 
-    public void setCancellationDate(Date cancellationDate) {
+    public void setCancellationDate(LocalDate cancellationDate) {
         this.cancellationDate = cancellationDate;
     }
 
@@ -161,11 +136,11 @@ public class Booking {
         this.dropOffKmNr = dropOffKmNr;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

@@ -59,7 +59,20 @@ public class UserRepository implements IObjectRepository<User> {
 
     @Override
     public User readId(int id) {
-        return null;
+
+        User user = null;
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM users WHERE pKey_userId= '" + id + "'");
+            result = preparedStatement.executeQuery();
+
+            if (result.next()) {
+                user = new User(result.getInt("pKey_userId"), result.getString("fullName"), result.getString("cprNr"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
@@ -84,6 +97,18 @@ public class UserRepository implements IObjectRepository<User> {
 
     @Override
     public void update(String tableName, User object) {
+        try {
+            preparedStatement = conn.prepareStatement("UPDATE users SET fullName = ?, cprNr = ? WHERE pKey_userId = ?");
+
+            preparedStatement.setString(1, object.getFullName());
+            preparedStatement.setString(2, object.getCprNr());
+            preparedStatement.setInt(3, object.getId());
+
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

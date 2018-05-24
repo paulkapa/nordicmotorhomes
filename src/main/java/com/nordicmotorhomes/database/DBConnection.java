@@ -13,7 +13,7 @@ class DBConnection {
 
     static Connection getConnection() {
         try {
-            System.out.println("\nConnected!\n\n");
+            System.out.println("\nConnecting...\n\n");
             return DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();

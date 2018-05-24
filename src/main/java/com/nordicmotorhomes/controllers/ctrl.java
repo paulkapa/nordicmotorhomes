@@ -4,11 +4,14 @@ import com.nordicmotorhomes.database.*;
 import com.nordicmotorhomes.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.awt.print.Book;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 @Controller
@@ -20,9 +23,9 @@ public class ctrl {
     private static IObjectRepository userRepository = new UserRepository();
     private static IObjectRepository bookingRepository = new BookingRepository();
     private static IObjectRepository motorhomeRepository = new MotorhomeRepository();
-    private static IObjectRepository modelRepository = new ModelRepository();
     private static IObjectRepository repairRepository = new RepairRepository();
     private static IObjectRepository extraRepository = new ExtraRepository();
+    private static IObjectRepository rentalRepository = new RentalRepository();
 
     private static ArrayList<Staff> staffList;
     private static ArrayList<User> userList;
@@ -30,6 +33,7 @@ public class ctrl {
     private static ArrayList<Motorhome> motorhomeList;
     private static ArrayList<Repair> repairList;
     private static ArrayList<Extra> extraList;
+
 
     public ctrl() {
 
@@ -158,6 +162,7 @@ public class ctrl {
             extraRepository.create("extras", extra);
             extraList = extraRepository.readAll("extra");
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         switch (logInAccess) {
@@ -185,15 +190,13 @@ public class ctrl {
     }
 
     @PostMapping("/addRepairs")
-    public String addRepairs(@ModelAttribute Repair repair) {
+    public String addRepairs(@ModelAttribute Repair repair, @ModelAttribute Motorhome motorhome) {
 
-        try {
-            repairRepository.create("mtrhms_repairs", repair);
-            repairList = repairRepository.readAll("mtrhms_repairs");
-        } catch (Exception e) {
-        }
+        repairRepository.create("mtrhms_repairs", repair);
+        repairList = repairRepository.readAll("mtrhms_repairs");
 
         switch (logInAccess) {
+
             case 1:
                 return "redirect:/admin";
             case 4:
@@ -203,11 +206,36 @@ public class ctrl {
         return "redirect:/";
     }
 
+    @GetMapping("/updateRepairs")
+    public String updateRepairs(@RequestParam("id") int id, Model model) {
+        if (logInAccess == 1 || logInAccess == 4) {
+            Repair repair = (Repair) repairRepository.readId(id);
+            model.addAttribute("repair", repair);
+            return "updateRepairs";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/updateRepairs")
+    public String updateRepairs(@ModelAttribute Repair repair) {
+        repairRepository.update("mtrhms_repair", repair);
+        repairList = repairRepository.readAll("mtrhms_repair");
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 4:
+                return "redirect:/mechanic";
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/addBookings")
     public String addBookings(Model model) {
-        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 3 || logInAccess == 5) {
+        if (logInAccess == 1 || logInAccess == 5) {
             model.addAttribute("mtrhm", motorhomeList);
             model.addAttribute("usr", userList);
+            model.addAttribute("bookings", bookingList);
             return "addBookings";
         }
         else {
@@ -222,16 +250,13 @@ public class ctrl {
         try {
             bookingRepository.create("mtrhms_bookings", booking);
             bookingList = bookingRepository.readAll("mtrhms_bookings");
+
         } catch (Exception e) {
         }
 
         switch (logInAccess) {
             case 1:
                 return "redirect:/admin";
-            case 2:
-                return "redirect:/sales";
-            case 3:
-                return "redirect:/cleaning";
             case 5:
                 return "redirect:/bookkeeper";
         }
@@ -239,10 +264,57 @@ public class ctrl {
         return "redirect:/";
     }
 
+    @GetMapping("/updateBookings")
+    public String updateBookings(@RequestParam("id") int id, Model model) {
+
+        if (logInAccess == 1 || logInAccess == 2 || logInAccess == 5) {
+            Booking booking = (Booking) bookingRepository.readId(id);
+            model.addAttribute("booking", booking);
+            return "updateBookings";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/updateBookings")
+    public String updateBookings(@ModelAttribute Booking booking) {
+
+        bookingRepository.update("mtrhms_bookings", booking);
+        bookingList = bookingRepository.readAll("mtrhms_bookings");
+
+
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 2:
+                return "redirect:/sales";
+            case 5:
+                return "redirect:/bookkeeper";
+
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("printContract")
+    public String printContract(@RequestParam("id") int id, Model model) {
+
+        if (logInAccess == 2) {
+
+            Booking booking = (Booking) bookingRepository.readId(id);
+            model.addAttribute("booking", booking);
+            model.addAttribute("user", userList.get(booking.getUserId() - 1));
+            model.addAttribute("motorhome", motorhomeList.get(booking.getUserId()));
+            return "printContract";
+        }
+        return "redirect:/";
+    }
+
+
     @GetMapping("/addRental")
     public String addRental(Model model) {
-        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 3 || logInAccess == 5) {
+        if (logInAccess == 1 || logInAccess == 5) {
             model.addAttribute("mtrhm", motorhomeList);
+            model.addAttribute("rental", bookingList);
             model.addAttribute("usr", userList);
             return "addRental";
         }
@@ -256,7 +328,7 @@ public class ctrl {
     public String addRental(@ModelAttribute Booking booking) {
 
         try {
-            bookingRepository.create("mtrhms_bookings", booking);
+            rentalRepository.create("mtrhms_bookings", booking);
             bookingList = bookingRepository.readAll("mtrhms_bookings");
         } catch (Exception e) {
         }
@@ -264,10 +336,6 @@ public class ctrl {
         switch (logInAccess) {
             case 1:
                 return "redirect:/admin";
-            case 2:
-                return "redirect:/sales";
-            case 3:
-                return "redirect:/cleaning";
             case 5:
                 return "redirect:/bookkeeper";
         }
@@ -277,7 +345,7 @@ public class ctrl {
 
     @GetMapping("/addMotorhomes")
     public String addMotorhomes() {
-        if(logInAccess == 1 || logInAccess == 2 || logInAccess == 3 || logInAccess == 4 || logInAccess == 5) {
+        if (logInAccess == 1 || logInAccess == 4 || logInAccess == 5) {
             return "addMotorhomes";
         }
         else {
@@ -299,16 +367,41 @@ public class ctrl {
         switch (logInAccess) {
             case 1:
                 return "redirect:/admin";
-            case 2:
-                return "redirect:/sales";
-            case 3:
-                return "redirect:/cleaning";
             case 4:
                 return "redirect:/mechanic";
             case 5:
                 return "redirect:/bookkeeper";
         }
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/updateMotorhomes")
+    public String updateMotorhomes(@RequestParam("id") int id, Model model) {
+        if (logInAccess == 1 || logInAccess == 2 || logInAccess == 4 || logInAccess == 5) {
+            Motorhome motorhome = (Motorhome) motorhomeRepository.readId(id);
+            model.addAttribute("motorhome", motorhome);
+            return "updateMotorhomes";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/updateMotorhomes")
+    public String updateMotorhomes(@ModelAttribute Motorhome motorhome) {
+        motorhomeRepository.update("mtrhms", motorhome);
+        motorhomeList = motorhomeRepository.readAll("mtrhms");
+        switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
+            case 2:
+                return "redirect:/sales";
+            case 4:
+                return "redirect:/mechanic";
+            case 5:
+                return "redirect:/bookkeeper";
+
+        }
         return "redirect:/";
     }
 
@@ -345,74 +438,104 @@ public class ctrl {
         return "redirect:/";
     }
 
+    // we decided that on average, a motorhome consumes 10 liters per 100 kms
+    // the 70 euros additional fee will be added randomly, as we can't actually take the data
+    // from the customer to see if the tank was full or not by the dropoff
     @GetMapping("/calculatePrice")
-    public String calculatePrice() {
-        if(logInAccess == 2) {
+    public String calculatePrice(@RequestParam("id") int id, Model model) {
+        if (logInAccess == 2) {
+            Booking booking = (Booking) bookingRepository.readId(id);
+            model.addAttribute("booking", booking);
+
+            int pricePerDay = booking.getPpd();
+            double totalPrice = 0;
+            long diffCancelation = 0;
+            long diffRental = 0;
+
+
+            diffCancelation = (Date.valueOf(booking.getStartDate()).getTime() - Date.valueOf(booking.getCancellationDate()).getTime()) / 86400000;
+            diffRental = (Date.valueOf(booking.getEndDate()).getTime() - Date.valueOf(booking.getStartDate()).getTime()) / 86400000;
+            diffRental++;
+            if (booking.getIsCancelled() == 1) {
+                if (totalPrice < 200) {
+                    totalPrice = 200;
+                }
+
+                if (diffCancelation >= 0 && diffCancelation < 15) {
+                    totalPrice += 0.95 * booking.getPpd();
+                } else if (diffCancelation >= 15 && diffCancelation <= 49) {
+                    totalPrice += 0.5 * booking.getPpd();
+                } else if (diffCancelation > 49) {
+                    totalPrice += 0.2 * booking.getPpd();
+                }
+
+            } else if (Date.valueOf(booking.getStartDate()).getMonth() >= 1 && Date.valueOf(booking.getStartDate()).getMonth() < 4) {
+                // price stays the same in this season
+                pricePerDay = booking.getPpd();
+
+            } else if (Date.valueOf(booking.getStartDate()).getMonth() >= 4 && Date.valueOf(booking.getStartDate()).getMonth() < 8) {
+                pricePerDay += (int) (booking.getPpd() * 0.3);
+
+
+            } else if (Date.valueOf(booking.getStartDate()).getMonth() >= 8 && Date.valueOf(booking.getStartDate()).getMonth() <= 12) {
+                pricePerDay += (int) (booking.getPpd() * 0.6);
+            }
+
+            int averageKilometers = (int) (booking.getDropOffKmNr() / diffRental);
+
+            if (averageKilometers > 400) {
+                totalPrice += averageKilometers - 400;
+            } else {
+                totalPrice += diffRental * pricePerDay;
+            }
+
+            Random rand = new Random();
+            int fuel = rand.nextInt(2);
+            if (fuel == 1) {
+                totalPrice += 70;
+            }
+
+            totalPrice += booking.getExtrasPrice();
+            totalPrice += booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
+            booking.setTotalPrice((int) totalPrice);
+            bookingRepository.update("mtrhms_booking", booking);
+            bookingList = bookingRepository.readAll("mtrhms_booking");
             return "calculatePrice";
         } else {
             return "redirect:/";
         }
     }
 
-    @PostMapping("/calculatePrice")
-    public String calculatePrice(@RequestParam("id") int id, Model model) {
-        double totalPrice = 0;
 
-        Booking booking = (Booking) bookingRepository.read("mtrhms_bookings", "pKey_bookingId", String.valueOf(id));
+    @GetMapping("/updateUsers")
+    public String updateUsers(@RequestParam("id") int id, Model model) {
 
-        long diff = (booking.getStartDate().getTime()-booking.getCancellationDate().getTime()) / 86400000;
-
-        if(booking.getIsCancelled() == 1) {
-
-            if(diff>=0 && diff <15) {
-                totalPrice = 0.95 * booking.getPpd();
-            } else if(diff>=15 && diff<=49) {
-                totalPrice = 0.5 * booking.getPpd();
-            } else if(diff>49) {
-                totalPrice = 0.2 * booking.getPpd();
-            }
-
-            if(totalPrice < 200) {
-                totalPrice = 200;
-            }
-
-        } else if(booking.getStartDate().getMonth() >= 1 && booking.getStartDate().getMonth() < 4) {
-
-            totalPrice = booking.getPpd() + booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
-
-            if(booking.getDropOffKmNr()>400)
-                totalPrice = totalPrice + booking.getDropOffKmNr() - 400;
-
-        } else if(booking.getStartDate().getMonth() >= 4 && booking.getStartDate().getMonth() < 8) {
-
-            totalPrice = booking.getPpd() * 1.3 + booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
-
-            if(booking.getDropOffKmNr()>400)
-                totalPrice = totalPrice + booking.getDropOffKmNr() - 400;
-
-        } else if(booking.getStartDate().getMonth() >=8 && booking.getStartDate().getMonth() <= 12) {
-
-            totalPrice = booking.getPpd() * 1.6 + booking.getPickUpDistance() * 0.7 + booking.getDropOffDistance() * 0.7;
-
-            if(booking.getDropOffKmNr()>400)
-                totalPrice = totalPrice + booking.getDropOffKmNr() - 400;
-
+        if (logInAccess == 1 || logInAccess == 2 || logInAccess == 5) {
+            User user = (User) userRepository.readId(id);
+            model.addAttribute("user", user);
+            return "updateUsers";
+        } else {
+            return "redirect:/";
         }
 
-        booking.setTotalPrice((int) totalPrice);
+    }
 
-        model.addAttribute("bkng", booking);
+    @PostMapping("/updateUsers")
+    public String updateUsers(@ModelAttribute User user) {
 
-        bookingRepository.update("mtrhms_booking", booking);
-
-        bookingList = bookingRepository.readAll("mtrhms_booking");
-
+        userRepository.update("users", user);
+        userList = userRepository.readAll("users");
         switch (logInAccess) {
+            case 1:
+                return "redirect:/admin";
             case 2:
                 return "redirect:/sales";
-        }
+            case 5:
+                return "redirect:/bookkeeper";
 
+        }
         return "redirect:/";
     }
+
 
 }

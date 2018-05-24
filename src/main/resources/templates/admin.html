@@ -96,6 +96,8 @@
             <th>Km at Drop-Off</th>
             <th>End Date</th>
             <th>Reserved/Rented</th>
+            <th>Total price</th>
+            <th>Is paid</th>
             <th></th>
         </tr>
         </thead>
@@ -115,6 +117,8 @@
             <td th:text="${booking.dropOffKmNr}"></td>
             <td th:text="${booking.endDate}"></td>
             <td th:text="${booking.reservationRental}"></td>
+            <td th:text="${booking.totalPrice}"></td>
+            <td th:text="${booking.isPaid}"></td>
             <td>
                 <a th:href="@{'/updateBookings?id=' + ${booking.id}}" class="btn btn-update">Update</a>
             </td>

@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <!--meta charset="UTF-8"-->
+
     <title>UpdateUsers</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+
+<div class="container">
+
+    <form action="/updateUsers" method="post">
+
+        <input type="hidden" th:field="${user.id}"/>
+        <p>Full Name: <input type="text" th:field="${user.fullName}"/></p>
+        <p>Cpr: <input type="text" th:field="${user.cprNr}"/></p>
+        <input type="submit" value="Update" class="btn btn-create"/>
+
+    </form>
+
+</div>
 
 </body>
 </html>

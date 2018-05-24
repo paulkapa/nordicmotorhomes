@@ -2,15 +2,12 @@ package com.nordicmotorhomes.database;
 
 import com.nordicmotorhomes.model.Repair;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class RepairRepository implements IObjectRepository<Repair> {
 
-    private static Connection conn = DBConnection.getConnection();;
+    private static Connection conn = DBConnection.getConnection();
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
@@ -25,8 +22,8 @@ public class RepairRepository implements IObjectRepository<Repair> {
 
             while (result.next()){
                 repairList.add(new Repair(result.getInt("pKey_repairId"), result.getInt("fKey_mtrhmId"),
-                        result.getDate("startDate"), result.getString("problem"),
-                        result.getString("solution"), result.getDate("endDate")));
+                        result.getDate("startDate").toLocalDate(), result.getString("problem"),
+                        result.getString("solution"), result.getDate("endDate").toLocalDate()));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,28 +44,58 @@ public class RepairRepository implements IObjectRepository<Repair> {
 
     @Override
     public Repair readId(int id) {
-        return null;
-    }
+        Repair repair = null;
 
-    @Override
-    public void update(String tableName, Repair object) {
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM mtrhms_repairs WHERE pKey_repairId = '" + id + "'");
+            result = preparedStatement.executeQuery();
 
+            if (result.next()) {
+                repair = new Repair(result.getInt("pKey_repairId"), result.getInt("fKey_mtrhmId"), result.getDate("startDate").toLocalDate(), result.getString("problem"), result.getString("solution"), result.getDate("endDate").toLocalDate());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return repair;
     }
 
     @Override
     public void create(String tableName, Repair object) {
+
         try {
+            preparedStatement = conn.prepareStatement("INSERT INTO mtrhms_repairs(fKey_mtrhmId, startDate, problem, solution, endDate) VALUES(?, ?, ? , ?, ?)");
 
-            preparedStatement = conn.prepareStatement("INSERT INTO mtrhms_repairs(startDate, problem, solution, endDate)  VALUE (?, ?, ?, ?)");
-
-            preparedStatement.setDate(1, object.getStartDate());
-            preparedStatement.setString(2, object.getProblem());
-            preparedStatement.setString(3, object.getSolution());
-            preparedStatement.setDate(4, object.getEndDate());
+            preparedStatement.setInt(1, object.getMotorhomeId());
+            preparedStatement.setDate(2, Date.valueOf(object.getStartDate()));
+            preparedStatement.setString(3, object.getProblem());
+            preparedStatement.setString(4, object.getSolution());
+            preparedStatement.setDate(5, Date.valueOf(object.getEndDate()));
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void update(String tableName, Repair object) {
+        try {
+            preparedStatement = conn.prepareStatement("UPDATE mtrhms_repairs SET fKey_mtrhmId = ?, startDate = ?,  problem = ?, solution = ?, endDate = ? WHERE pKey_repairId = ?");
+
+            preparedStatement.setInt(1, object.getMotorhomeId());
+            preparedStatement.setDate(2, Date.valueOf(object.getStartDate()));
+            preparedStatement.setString(3, object.getProblem());
+            preparedStatement.setString(4, object.getSolution());
+            preparedStatement.setDate(5, Date.valueOf(object.getEndDate()));
+            preparedStatement.setInt(6, object.getRepairId());
+
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

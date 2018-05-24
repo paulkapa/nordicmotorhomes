@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <!--meta charset="UTF-8"-->
+
     <title>UpdateBookings</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+
+<div class="container">
+
+    <form action="/updateBookings" method="post">
+
+        <input type="hidden" th:field="${booking.id}"/>
+        <p>Motorhome Id: <input type="text" th:field="${booking.mtrhmId}"/></p>
+        <p>User id: <input type="text" th:field="${booking.userId}"/></p>
+        <p>Start date: <input type="date" th:field="${booking.startDate}"/></p>
+        <p>Is cancelled: <input type="text" th:field="${booking.isCancelled}"/></p>
+        <p>Cancellation date: <input type="date" th:field="${booking.cancellationDate}"/></p>
+        <p>Price per day: <input type="text" th:field="${booking.ppd}"/></p>
+        <p>Extras price: <input type="text" th:field="${booking.extrasPrice}"/></p>
+        <p>Pick up distance: <input type="text" th:field="${booking.pickUpDistance}"/></p>
+        <p>Drop off distance: <input type="text" th:field="${booking.dropOffDistance}"/></p>
+        <p>Drop off number of km: <input type="text" th:field="${booking.dropOffKmNr}"/></p>
+        <p>End date: <input type="date" th:field="${booking.endDate}"/></p>
+        <p>Reservation/rental: <input type="text" th:field="${booking.reservationRental}"/></p>
+        <p>Total price: <input type="text" th:field="${booking.totalPrice}"/></p>
+        <p>Is paid: <input type="text" th:field="${booking.isPaid}"/></p>
+
+        <input type="submit" value="Update" class="btn btn-create"/>
+
+    </form>
+
+</div>
 
 </body>
 </html>

@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <!--meta charset="UTF-8"-->
+
     <title>UpdateRepairs</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+
+<div class="container">
+
+    <form action="/updateRepairs" method="post">
+
+        <input type="hidden" th:field="${repair.repairId}"/>
+        <p>Motorhome Id: <input type="text" th:field="${repair.motorhomeId}"/></p>
+        <p>Start date: <input type="date" th:field="${repair.startDate}"/></p>
+        <p>Problem: <input type="text" th:field="${repair.problem}"/></p>
+        <p>Solution: <input type="text" th:field="${repair.solution}"/></p>
+        <p>End date: <input type="date" th:field="${repair.endDate}"/></p>
+
+        <input type="submit" value="Update" class="btn btn-create"/>
+
+    </form>
+
+</div>
 
 </body>
 </html>

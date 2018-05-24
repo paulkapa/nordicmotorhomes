@@ -57,45 +57,49 @@
 <br>
 <br>
 
-<div class="container">
+    <div class="container">
 
-    <h1>Motorhomes</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Motorhome Id</th>
-            <th>Type</th>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Is Available</th>
-            <th>Max Capacity (persons)</th>
-            <th>Fuel Tank Volume (L/kg)</th>
-            <th>Price Per Day</th>
-            <th></th>
-        </tr>
-        </thead>
+        <h1>Motorhomes</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Motorhome Id</th>
+                <th>Type</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Is Available</th>
+                <th>Max Capacity (persons)</th>
+                <th>Fuel Tank Volume (L/kg)</th>
+                <th>Price Per Day</th>
+                <th></th>
+            </tr>
+            </thead>
 
-        <tbody>
-        <tr th:each="motorhome : ${mtrhm}">
-            <td th:text="${motorhome.id}"></td>
-            <td th:text="${motorhome.type}"></td>
-            <td th:text="${motorhome.brand}"></td>
-            <td th:text="${motorhome.model}"></td>
-            <td th:text="${motorhome.isAvailable}"></td>
-            <td th:text="${motorhome.maxCapacity}"></td>
-            <td th:text="${motorhome.fuelTankVolume}"></td>
-            <td th:text="${motorhome.ppd}"></td>
-            <td>
-                <a th:href="@{'/updateMotorhomes?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            <tbody>
+            <tr th:each="motorhome : ${mtrhm}">
+                <td th:text="${motorhome.id}"></td>
+                <td th:text="${motorhome.type}"></td>
+                <td th:text="${motorhome.brand}"></td>
+                <td th:text="${motorhome.model}"></td>
+                <td th:text="${motorhome.isAvailable}"></td>
+                <td th:text="${motorhome.maxCapacity}"></td>
+                <td th:text="${motorhome.fuelTankVolume}"></td>
+                <td th:text="${motorhome.ppd}"></td>
+                <td>
+                    <a th:href="@{'/updateMotorhomes?id=' + ${motorhome.id}}" class="btn btn-update">Update</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-</div>
+        <p>
+            <a href="/addMotorhomes" class="btn btn-add ">Add new motorhome</a>
+        </p>
 
-<br>
-<br>
+    </div>
+
+    <br>
+    <br>
 
 <div class="container">
 

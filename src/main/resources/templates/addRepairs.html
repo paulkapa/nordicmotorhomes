@@ -41,16 +41,24 @@
         </table>
 
     <br>
+    <br>
 
-    <form action="/addRepairs" method="post">
+    <div class="container">
 
-        <p>Motorhome Id: <input type="text" name="motorhomeId" /></p>
-        <p>Start Date: <input type="date" name="startDate" /></p>
-        <p>Problem: <input type="text" name="problem" /></p>
-        <p>Solution: <input type="text" name="solution" /></p>
-        <p>End Date: <input type="date" name="endDate" /></p>
-        <input type="submit" value="Add" class="btn btn-add"/>
-    </form>
+        <h1>Add Repairs</h1>
+
+        <form action="/addRepairs" method="post">
+
+            <p>Motorhome Id: <input type="text" name="motorhomeId"/></p>
+            <p>Start date: <input type="date" name="startDate"/></p>
+            <p>Problem: <input type="text" name="problem"/></p>
+            <p>Solution: <input type="text" name="solution"/></p>
+            <p>End date: <input type="date" name="endDate"/></p>
+            <input type="submit" value="Add" class="btn btn-add"/>
+        </form>
+
+    </div>
+
 
 </div>
 

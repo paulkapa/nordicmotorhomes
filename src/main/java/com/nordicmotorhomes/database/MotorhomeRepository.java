@@ -5,12 +5,15 @@ import com.nordicmotorhomes.model.Modela;
 import com.nordicmotorhomes.model.Motorhome;
 import com.nordicmotorhomes.model.Type;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MotorhomeRepository implements IObjectRepository<Motorhome> {
 
-    private static Connection conn = DBConnection.getConnection();;
+    private static Connection conn = DBConnection.getConnection();
     private PreparedStatement preparedStatement;
     private ResultSet result;
 
@@ -39,7 +42,7 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
                 motorhome.setBrand(brand.getBrand());
                 Modela model = (Modela) modelRepository.read("models", "id", String.valueOf(result.getInt("fKey_modelId")));
                 motorhome.setModel(model.getModel());
-                motorhome.setIsAvailable(checkBooking(motorhome.getId()));
+                motorhome.setIsAvailable(result.getInt("isAvailable"));
                 motorhome.setMaxCapacity(model.getMaxCapacity());
                 motorhome.setFuelTankVolume(model.getFuelTankVolume());
                 motorhome.setPpd(model.getPpd());
@@ -64,7 +67,20 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
 
     @Override
     public Motorhome readId(int id) {
-        return null;
+        Motorhome motorhome = null;
+
+        try {
+            preparedStatement = conn.prepareStatement("SELECT * FROM mtrhms WHERE pKey_mtrhmId = '" + id + "'");
+            result = preparedStatement.executeQuery();
+
+            if (result.next()) {
+                motorhome = new Motorhome(result.getInt("pKey_mtrhmId"), result.getInt("isAvailable"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return motorhome;
     }
 
     @Override
@@ -87,26 +103,24 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
 
     @Override
     public void update(String tableName, Motorhome object) {
-        /*
         try {
-            preparedStatement = conn.prepareStatement("UPDATE mtrhms SET fKey = ?, last_name = ?, enrollment_date = ?, cpr = ? WHERE id = ?");
-            preparedStatement.setString(1, student.getName());
-            preparedStatement.setString(2, student.getLastName());
-            preparedStatement.setDate(3, Date.valueOf(student.getEnrollmentDate()));
-            preparedStatement.setString(4, student.getCpr());
-            preparedStatement.setInt(5, student.getId());
+            preparedStatement = conn.prepareStatement("UPDATE mtrhms SET isAvailable = ? WHERE pKey_mtrhmId = ?");
+
+            preparedStatement.setInt(1, object.getIsAvailable());
+            preparedStatement.setInt(2, object.getId());
 
             preparedStatement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    */
+
     }
 
 
     @Override
     public void delete(String tableName, String columnName, String value) {
+
 
     }
 
@@ -211,29 +225,5 @@ public class MotorhomeRepository implements IObjectRepository<Motorhome> {
             e.printStackTrace();
         }
         return object;
-    }
-
-    private int checkBooking(int motorhomeId) {
-        Date date = new Date(System.currentTimeMillis());
-        int isAvailable = 1;
-
-        PreparedStatement preparedStatement;
-        ResultSet result;
-
-        try{
-
-            preparedStatement = conn.prepareStatement("select * from mtrhms_bookings");
-            result = preparedStatement.executeQuery();
-
-            while(result.next() && isAvailable == 1){
-                if(result.getInt("fKey_mtrhmsId") == motorhomeId && ((date.after(result.getDate("startDate")) && date.before(result.getDate("endDate"))) && result.getInt("isCancelled") != 1)) {
-                    isAvailable = 0;
-                }
-            }
-
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return isAvailable;
     }
 }

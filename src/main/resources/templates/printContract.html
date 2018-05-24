@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Contract</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
+
+<div class="container">
+    <h1 th:text="'Details of contract for ' + ${user.fullName}"></h1>
+
+    <p th:text="${user.fullName} + ' with CPR number ' + ${user.cprNr} + ' has rented or booked a motorhome.
+    The contract has the following details:'"></p>
+
+    <p th:text="'Id of the booking: ' + ${booking.id} "></p>
+    <p th:text="'On: ' + ${booking.startDate} "></p>
+    <p th:text="'Reservation/rental: ' + ${booking.reservationRental} "></p>
+    <p th:text="'Total price to pay: ' + ${booking.totalPrice} "></p>
+    <p th:text="'Type of the motorhome: ' + ${motorhome.type} "></p>
+    <p th:text="'Brand of the motorhome: ' + ${motorhome.brand} "></p>
+    <p th:text="'Model of the motorhome: ' + ${motorhome.model} "></p>
+    <p th:text="'Maximum capacity: ' + ${motorhome.maxCapacity} "></p>
+    <p th:text="'With a fuel tank of: ' + ${motorhome.fuelTankVolume} "></p>
+    <p th:text="'And a price per day of: ' + ${motorhome.ppd} "></p>
+
+
+    <a href="sales" class="btn btn-add">Go back</a>
+
+</div>
 </body>
 </html>

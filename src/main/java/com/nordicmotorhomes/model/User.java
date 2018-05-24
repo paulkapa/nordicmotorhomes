@@ -10,6 +10,7 @@ public class User {
 
     }
 
+
     public User(int id, String fullName, String cprNr) {
         this.id = id;
         this.fullName = fullName;

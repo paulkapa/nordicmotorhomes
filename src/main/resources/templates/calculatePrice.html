@@ -8,7 +8,7 @@
 
 <div class="container">
 
-    <h1>Calculate the price for booking</h1>
+    <h1>Price for booking</h1>
 
     <table>
         <thead>
@@ -31,7 +31,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="booking : ${bkn}">
+        <tr>
             <td th:text="${booking.id}"></td>
             <td th:text="${booking.mtrhmId}"></td>
             <td th:text="${booking.userId}"></td>
@@ -51,9 +51,10 @@
         </tr>
         </tbody>
     </table>
-
-    <span th:text="'Total price after calculation: ' + ${booking.totalPrice}"></span>
-
+    <br>
+    <br>
+    <span th:text="'Total price after calculation: ' + ${booking.totalPrice} + ' euros'"></span>
+    <!--
     <form action="/calculatePrice" method="post">
 
         <p>Price Per Day: <input type="text" name="ppd" /></p>
@@ -64,7 +65,10 @@
         <p>Total Price: <input type="text" name="totalPrice" /></p>
         <input type="submit" value="Calculate" class="btn btn-add"/>
     </form>
-
+    -->
+    <br>
+    <br>
+    <a href="sales" class="btn btn-add">Go back</a>
 </div>
 
 <p class = "footer">

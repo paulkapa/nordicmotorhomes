@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <!--meta charset="UTF-8"-->
-    <title>UpdateMotorhomes</title>
+
+    <title>UpdateMotorhome</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+
+<div class="container">
+
+    <form action="/updateMotorhomes" method="post">
+
+        <input type="hidden" th:field="${motorhome.id}"/>
+        <p>Is available: <input type="text" th:field="${motorhome.isAvailable}"/></p>
+        <input type="submit" value="Update" class="btn btn-create"/>
+
+    </form>
+
+</div>
 
 </body>
 </html>

@@ -2,25 +2,25 @@ package com.nordicmotorhomes.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Repair {
 
     private int repairId;
     private int motorhomeId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private LocalDate startDate;
     private String problem;
     private String solution;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
+    private LocalDate endDate;
 
 
     public Repair() {
 
     }
 
-    public Repair(int repairId, int motorhomeId, Date startDate, String problem, String solution, Date endDate) {
+    public Repair(int repairId, int motorhomeId, LocalDate startDate, String problem, String solution, LocalDate endDate) {
         this.repairId = repairId;
         this.motorhomeId = motorhomeId;
         this.startDate = startDate;
@@ -45,11 +45,11 @@ public class Repair {
         this.motorhomeId = motorhomeId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -69,11 +69,11 @@ public class Repair {
         this.solution = solution;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
